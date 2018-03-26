@@ -46,6 +46,16 @@ public class ListaSimple<T> {
         }
         tamaño += 1;
     }
+    
+    public T getDato(int pos) {
+    	NodoSimple<T> aux = this.primero;
+    	int cont = 0;
+    	while(cont != pos) {
+    		aux = aux.getSiguiente();
+    		cont ++;
+    	}
+    	return aux.getDato();
+    }
 
     @Override
     public String toString() {

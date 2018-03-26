@@ -23,5 +23,12 @@ public abstract class Sprite {
 		return bordes;
 	}
 	
-	public abstract void update();
+	protected boolean colisionDerecha() {
+		return bordes.x + texture.getWidth() <= Gdx.graphics.getWidth();
+	}
+	
+	protected boolean colisionIzquierda() {
+		return bordes.x >= 0;
+	}
+	
 }

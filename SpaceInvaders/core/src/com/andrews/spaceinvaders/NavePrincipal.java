@@ -12,9 +12,7 @@ public class NavePrincipal extends Sprite {
 		super(x, y, sprite);
 	}
 	
-	
-	@Override
-	public void update() {
+	public void move() {
 		float delta = Gdx.graphics.getDeltaTime();
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 			if (colisionIzquierda()){
@@ -28,12 +26,11 @@ public class NavePrincipal extends Sprite {
 		}
 	}
 	
-	private boolean colisionDerecha() {
+	public boolean colisionDerecha() {
 		return bordes.x + texture.getWidth() <= Gdx.graphics.getWidth();
 	}
 	
-	private boolean colisionIzquierda() {
+	public boolean colisionIzquierda() {
 		return bordes.x >= 0;
-		
 	}
 }
