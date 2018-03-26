@@ -10,6 +10,7 @@ public class EscenarioBatalla extends AbstractScreen {
 	private SpriteBatch batch;
 	private Texture background;
 	private NavePrincipal nave;
+	private Enemigo enemigo;
 
 	public EscenarioBatalla(GameMain main) {
 		super(main);
@@ -20,6 +21,7 @@ public class EscenarioBatalla extends AbstractScreen {
 		batch = new SpriteBatch();
 		background = new Texture(Gdx.files.internal("background.jpg"));
 		nave = new NavePrincipal((Gdx.graphics.getWidth()/2)-25, 20, "ship.png");
+		enemigo = new Enemigo((Gdx.graphics.getWidth()/2)-25, 300, "enemySprite1.png");
 	}
 
 	@Override
@@ -30,6 +32,7 @@ public class EscenarioBatalla extends AbstractScreen {
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		nave.draw(batch);
+		enemigo.draw(batch);
 		batch.end();
 	}
 }
