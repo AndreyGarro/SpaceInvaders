@@ -5,8 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Se encarga de crear los enemigos
+ * @author andrey
+ *
+ */
 public class Enemigo extends Sprite {
 	
+	//Atributos
 	private float x, y;
 	private Animation animation;
 	private float tiempo;
@@ -14,6 +20,12 @@ public class Enemigo extends Sprite {
 	private TextureRegion frameActual;
 	
 
+	/**
+	 * Inicializa los enemigos y crea el sprite con movimiento del enemigo
+	 * @param x coordenadas en el eje x
+	 * @param y coordenadas en el eje y
+	 * @param sprite sprite del enemigo que se desea crear
+	 */
 	public Enemigo(float x, float y, String sprite) {
 		super(x, y, sprite);
 		TextureRegion[][] temp = TextureRegion.split(super.texture, super.texture.getWidth()/2, super.texture.getHeight());
@@ -24,7 +36,11 @@ public class Enemigo extends Sprite {
 		animation = new Animation(0.5f, regionMovimiento);
 		tiempo = 0f;
 	}
+	//Fin del constructor
 	
+	/**
+	 * Dibuja el enemigo en pantalla
+	 */
 	@Override
 	public void draw(final SpriteBatch batch) {
 		tiempo += Gdx.graphics.getDeltaTime();
@@ -32,12 +48,4 @@ public class Enemigo extends Sprite {
 		batch.draw(frameActual, super.bordes.x, super.bordes.y);
 	}
 	
-	public void move() {
-		if (this.colisionIzquierda() == false) {
-			bordes.x += 100;
-			}
-		if(this.colisionDerecha() == false) {
-			bordes.x -= 5;
-		}
-	}
 }

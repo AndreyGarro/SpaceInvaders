@@ -10,9 +10,7 @@ import com.badlogic.gdx.Screen;
  *
  */
 public class GameMain extends Game {
-
 	public Screen fondoBatalla;
-	
 	
 	/**
 	 * Crea la lista de enemigos y agrega la cantidad necesaria
@@ -29,9 +27,9 @@ public class GameMain extends Game {
 			listaEnemigos.agregarAlFinal(new Enemigo(xPos, yPos, "enemySprite.png"));
 			cont ++;
 			xPos += 50;
-		}
 		fondoBatalla = new EscenarioBatalla(this, listaEnemigos); 
 		setScreen(fondoBatalla);	
 	}
 
+	}
 }

@@ -17,6 +17,7 @@ public class EscenarioBatalla extends AbstractScreen {
 	private Texture background;
 	private NavePrincipal nave;
 	private ListaSimple<Enemigo> listaEnemigos;
+	private int x = 1;
 
 	/**
 	 * Inicializa el escenario
@@ -60,9 +61,25 @@ public class EscenarioBatalla extends AbstractScreen {
 		nave.draw(batch);
 		for(int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			listaEnemigos.getDato(i).draw(batch);
-			if (listaEnemigos.getDato(i) == listaEnemigos.getDato(0)) {
-				System.out.println("izq");
-				listaEnemigos.getDato(1).move();
+		}
+		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
+			if(!listaEnemigos.getDato(0).colisionIzquierda() && x == 1) {
+				listaEnemigos.getDato(i).bordes.x -= 1/05f;
+			}
+			else if(listaEnemigos.getDato(0).colisionIzquierda() && x == 1) {
+				for (int x = listaEnemigos.getTamaño()-1; x >= 0;x --) {
+					listaEnemigos.getDato(x).bordes.y -= 20;	
+				}
+				x=2;
+			}
+			if (!listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && x == 2) {
+				listaEnemigos.getDato(i).bordes.x += 1/05f;
+			}
+			else if(listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && x == 2) {
+				for(int x = 0; x < listaEnemigos.getTamaño(); x ++) {
+					listaEnemigos.getDato(x).bordes.y -= 20;
+				}
+				x = 1;
 			}
 		}
 		batch.end();
