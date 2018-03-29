@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+
 /**
  * Crea el escenario de batalla con sus debidos sprites dentro.
  * @author andrey
@@ -18,6 +19,7 @@ public class EscenarioBatalla extends AbstractScreen {
 	private NavePrincipal nave;
 	private ListaSimple<Enemigo> listaEnemigos;
 	private int x = 1;
+	private Disparo shot;
 
 	/**
 	 * Inicializa el escenario
@@ -41,6 +43,7 @@ public class EscenarioBatalla extends AbstractScreen {
 		batch = new SpriteBatch(); //agrupacion de sprites u objetos que se vayan a dibujar
 		background = new Texture(Gdx.files.internal("background.jpg"));
 		nave = new NavePrincipal((Gdx.graphics.getWidth()/2)-25, 10, "ship.png");
+		shot = new Disparo(500, 900, "laser.png");
 	}
 	
 	/**
@@ -52,16 +55,36 @@ public class EscenarioBatalla extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		//Limpia el buffer de dibujo
-		Gdx.gl.glClearColor(0,0,0,0);
+		Gdx.gl.glClearColor(1,1,1,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//
 		nave.move();
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		nave.draw(batch);
+		shot.draw(batch);
+		shot.disparar(shot, listaEnemigos.getDato(0).bordes, nave);
+		shot.move();
+		shot.disparado();
 		for(int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			listaEnemigos.getDato(i).draw(batch);
+			if(shot.bordes.overlaps(listaEnemigos.getDato(i).bordes)) {
+				if(listaEnemigos.getDato(i).isShooted()) {
+					shot.texture.dispose();
+					shot = new Disparo(500, 900, "laser.png");
+					listaEnemigos.eliminarPos();
+				}
+			
+			}
 		}
+		movimientoEnemigos();
+		batch.end();
+	}
+	
+	/**
+	 * Realiza el movimiento de los lados y hacia abajo de los enemigos.
+	 */
+	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			if(!listaEnemigos.getDato(0).colisionIzquierda() && x == 1) {
 				listaEnemigos.getDato(i).bordes.x -= 1/05f;
@@ -81,7 +104,10 @@ public class EscenarioBatalla extends AbstractScreen {
 				}
 				x = 1;
 			}
-		}
-		batch.end();
+		}		
 	}
+
+
 }
+
+

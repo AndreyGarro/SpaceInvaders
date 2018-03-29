@@ -18,7 +18,8 @@ public class Enemigo extends Sprite {
 	private float tiempo;
 	private TextureRegion[] regionMovimiento;
 	private TextureRegion frameActual;
-	
+	private boolean shooted = false;
+	private int resistencia;
 
 	/**
 	 * Inicializa los enemigos y crea el sprite con movimiento del enemigo
@@ -26,8 +27,9 @@ public class Enemigo extends Sprite {
 	 * @param y coordenadas en el eje y
 	 * @param sprite sprite del enemigo que se desea crear
 	 */
-	public Enemigo(float x, float y, String sprite) {
+	public Enemigo(float x, float y, int resistencia, String sprite) {
 		super(x, y, sprite);
+		this.resistencia = resistencia;
 		TextureRegion[][] temp = TextureRegion.split(super.texture, super.texture.getWidth()/2, super.texture.getHeight());
 		regionMovimiento = new TextureRegion[2];
 		for(int i = 0; i < 2; i ++) {
@@ -46,6 +48,20 @@ public class Enemigo extends Sprite {
 		tiempo += Gdx.graphics.getDeltaTime();
 		frameActual = (TextureRegion) animation.getKeyFrame(tiempo, true);
 		batch.draw(frameActual, super.bordes.x, super.bordes.y);
+	}
+	
+	/**
+	 * Realiza las acciones si el enemigo es disparado.
+	 */
+	public boolean isShooted() {
+		if (this.resistencia == 1) {
+			this.shooted = true;
+			return true;
+		}
+		else{
+			resistencia --;
+			return true;
+		}
 	}
 	
 }

@@ -24,7 +24,7 @@ public class GameMain extends Game {
 		int xPos = 20;
 		int yPos = 500;
 		while(cont < 15) {
-			listaEnemigos.agregarAlFinal(new Enemigo(xPos, yPos, "enemySprite.png"));
+			listaEnemigos.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png"));
 			cont ++;
 			xPos += 50;
 		fondoBatalla = new EscenarioBatalla(this, listaEnemigos); 

@@ -58,7 +58,7 @@ public class ListaSimple<T> {
                 aux = aux.getSiguiente();
             }
             aux.setSiguiente(nuevo);
-        }
+                    }
         tamaño += 1;
     }
 
@@ -109,6 +109,12 @@ public class ListaSimple<T> {
                 aux = aux.getSiguiente();
         }
         return lista;
+    }
+    
+    public void eliminarPos() {
+    	NodoSimple<T> aux = this.primero.getSiguiente();
+    	aux = primero;
+    	
     }
 
 

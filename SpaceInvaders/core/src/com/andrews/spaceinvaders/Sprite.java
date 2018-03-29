@@ -50,7 +50,7 @@ public abstract class Sprite {
 	 * @return true o false
 	 */
 	protected boolean colisionDerecha() {
-		return bordes.x >= Gdx.graphics.getWidth();
+		return bordes.x + 50>= Gdx.graphics.getWidth();
 	}
 	
 	/**
