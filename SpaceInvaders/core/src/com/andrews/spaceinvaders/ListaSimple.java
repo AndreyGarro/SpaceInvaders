@@ -111,9 +111,16 @@ public class ListaSimple<T> {
         return lista;
     }
     
-    public void eliminarPos() {
-    	NodoSimple<T> aux = this.primero.getSiguiente();
-    	aux = primero;
+    public void eliminarPos(int pos) {
+    	NodoSimple<T> aux = this.primero;
+    	if(!this.isEmpty()) {
+        	while(pos - 1 != 0) {
+        		aux = aux.getSiguiente();
+        		pos --;
+        	aux.setSiguiente(aux.getSiguiente().getSiguiente());	
+        	}
+    	}
+    	this.tamaño --;
     	
     }
 

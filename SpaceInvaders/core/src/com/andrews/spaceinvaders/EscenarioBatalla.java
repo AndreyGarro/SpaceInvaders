@@ -72,7 +72,7 @@ public class EscenarioBatalla extends AbstractScreen {
 				if(listaEnemigos.getDato(i).isShooted()) {
 					shot.texture.dispose();
 					shot = new Disparo(500, 900, "laser.png");
-					listaEnemigos.eliminarPos();
+					listaEnemigos.eliminarPos(i);
 				}
 			
 			}
