@@ -29,6 +29,7 @@ public abstract class Sprite {
 	}
 	//Fin del Constructor
 	
+	
 	/**
 	 * Se encarga de dibujar el sprite 
 	 * @param batch SpriteBatch para poder dibujar

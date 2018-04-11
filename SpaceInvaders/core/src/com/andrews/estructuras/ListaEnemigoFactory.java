@@ -59,6 +59,25 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 				}
 			}
 			return listaEnemigosClaseB;
+		}else if(hilera.equals("claseC")) {
+			ListaCircular<Enemigo> listaEnemigosClaseC = new ListaCircular<Enemigo>();
+			int cont = 0;
+			int xPos = 40;
+			int yPos = 500;
+			int random = (int) (Math.random()*14);
+			while(cont < 15) {
+				if(cont == random) {
+					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
+					cont ++;
+					xPos += 50;
+				}
+				else {
+					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
+					cont ++;
+					xPos += 50;
+				}
+			}
+			return listaEnemigosClaseC;
 		}
 		return null;
 	}

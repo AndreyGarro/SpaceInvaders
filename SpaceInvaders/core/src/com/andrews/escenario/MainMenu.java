@@ -64,8 +64,7 @@ public class MainMenu extends AbstractScreen{
 			}
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-			main.fondo = new Nivel1(main);
-			musicaFondo.stop();
+			main.fondo = new HileraC(main);  //Aqui llama la hilera que necesita
 			main.setScreen(main.fondo);
 		}
 		batch.end();

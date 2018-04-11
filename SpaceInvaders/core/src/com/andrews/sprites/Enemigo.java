@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Enemigo extends SpriteForEnemy {
 	
 	//Atributos
-	private float x, y;
 	private Animation animation;
 	private float tiempo;
 	private TextureRegion[] regionMovimiento;
@@ -73,5 +72,21 @@ public class Enemigo extends SpriteForEnemy {
 	public String getTipoEnemigo() {
 		return this.tipoEnemigo;
 	}
+	/*
+	public void setX(float x) {
+		this.x = x;
+	}
 	
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	public float getX() {
+		return this.x;
+	}
+	
+	public float getY() {
+		return this.y;
+	}
+	*/
 }

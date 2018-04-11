@@ -13,17 +13,21 @@ public class Disparo extends Sprite{
 
 	public Disparo(float x, float y, String sprite) {
 		super(x, y, sprite);
-		shootSound = Gdx.audio.newSound(Gdx.files.internal("shipShoot.wav"));
 	}
 	
 	public void move() {
-		this.bordes.y += 35;
+		this.bordes.y += 25;
 	}
 	
+	public void cargarSonido() {
+		shootSound = Gdx.audio.newSound(Gdx.files.internal("shipShoot.mp3"));
+		shootSound.setVolume(0,1f);
+		shootSound.play();
+	}
 	public void disparar(Disparo shot, NavePrincipal nave) {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			if(!this.disparado){
-				//shootSound.play();
+				cargarSonido();
 				this.disparado = true;
 				shot.bordes.x = nave.bordes.x + 27;
 				shot.bordes.y = nave.bordes.y + 57;

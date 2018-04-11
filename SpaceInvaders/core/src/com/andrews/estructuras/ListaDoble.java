@@ -1,6 +1,6 @@
 package com.andrews.estructuras;
 
-import com.andrews.escenario.Nivel3;
+import com.andrews.escenario.HileraB;
 import com.andrews.sprites.Enemigo;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -139,13 +139,33 @@ public class ListaDoble<T> extends Lista {
     		cont ++;
     	}
     }
-    
-    public void reemplazar(int random, int posJefe, Nivel3 nivel) {
-    	T c1 = this.getDato(posJefe);
-    	T c2 = this.getDato(random);
-    	this.getNodo(posJefe).setDato(c2);
-    	this.getNodo(random).setDato(c1);
-    	nivel.tempo = 0;
+   
+    public void reemplazar(int pos, NodoDoble<T> reemplazo) {
+        NodoDoble<T> pivote = this.primero;
+        for(int i = 0; i <= pos; i ++) {
+            if (i == pos) {
+                if(pivote != this.primero && i != this.tamaño - 1) {
+                    reemplazo.setAnterior(pivote.getAnterior());
+                    reemplazo.setSiguiente(pivote.getSiguiente());
+                    pivote.getAnterior().setSiguiente(reemplazo);
+                    pivote.getSiguiente().setAnterior(reemplazo);
+                    break;
+                }
+                else if(pivote == this.primero){
+                    reemplazo.setSiguiente(pivote.getSiguiente());
+                    pivote.getSiguiente().setAnterior(reemplazo);
+                    primero = reemplazo;
+                    break; 
+                }
+                else if(i == this.tamaño - 1){
+                    reemplazo.setAnterior(this.getNodo(this.tamaño-1).getAnterior());
+                    pivote.getAnterior().setSiguiente(reemplazo);
+                    break;
+                }
+            }
+            pivote = pivote.getSiguiente();
+        }
+
     }
     
 }
