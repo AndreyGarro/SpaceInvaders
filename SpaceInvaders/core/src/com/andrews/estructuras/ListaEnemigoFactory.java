@@ -14,9 +14,9 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			int xPos = 20;
 			int yPos = 500;
 			ListaSimple<Enemigo> listaEnemigosBasica = new ListaSimple<Enemigo>();
-			while(cont < 15) {
+			while(cont < 10) {
 				listaEnemigosBasica.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
-				xPos += 50;
+				xPos += 75;
 				cont ++;
 			}
 			return listaEnemigosBasica;
@@ -26,17 +26,17 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 500;
-			int random = (int) (Math.random()*14);
-			while(cont < 15) {
+			int random = (int) (Math.random()*10);
+			while(cont < 10) {
 				if(cont == random) {
 					listaEnemigosClaseA.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
 					cont ++;
-					xPos += 50;
+					xPos += 75;
 				}
 				else {
 					listaEnemigosClaseA.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
 					cont ++;
-					xPos += 50;
+					xPos += 75;
 				}
 			}
 			return listaEnemigosClaseA;		
@@ -45,17 +45,17 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 500;
-			int random = (int) (Math.random()*14);
-			while(cont < 15) {
+			int random = (int) (Math.random()*10);
+			while(cont < 10) {
 				if(cont == random) {
 					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
 					cont ++;
-					xPos += 50;
+					xPos += 75;
 				}
 				else {
 					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
 					cont ++;
-					xPos += 50;
+					xPos += 75;
 				}
 			}
 			return listaEnemigosClaseB;
@@ -64,12 +64,12 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 500;
-			int random = (int) (Math.random()*14);
-			while(cont < 15) {
+			int random = (int) (Math.random()*10);
+			while(cont < 75) {
 				if(cont == random) {
-					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
+					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 2), "boss2.png", "boss"));
 					cont ++;
-					xPos += 50;
+					xPos += 75;
 				}
 				else {
 					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));

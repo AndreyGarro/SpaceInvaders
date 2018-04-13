@@ -25,6 +25,7 @@ public class HileraB extends AbstractScreen {
 
 	public HileraB(GameMain main) {
 		super(main);
+		this.tipo = "HileraB";
 		this.listaEnemigos = (ListaDoble<Enemigo>) ListaEnemigoFactory.getLista("claseB");
 	}
 
@@ -88,23 +89,26 @@ public class HileraB extends AbstractScreen {
 	 */
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
-			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				listaEnemigos.getDato(i).getBordes().x -= 1 / 05f;
-			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;
-				}
-				revisaColision = 2;
+			if(!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
 			}
-			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
-				listaEnemigos.getDato(i).getBordes().x += 1 / 05f;
-			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
-				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;
+			else if(listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = listaEnemigos.getTamaño()-1; x >= 0;x --) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;	
+				}
+				revisaColision=2;
+			}
+			if (!listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+				listaEnemigos.getDato(i).getBordes().x += 0.7f;
+			}
+			else if(listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+				for(int x = 0; x < listaEnemigos.getTamaño(); x ++) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
 				revisaColision = 1;
 			}
-		}
+			
+		}		
 	}
 	
 	private void revisaImpacto(int i){
@@ -144,8 +148,8 @@ public class HileraB extends AbstractScreen {
 		
 		nuevoJefe.setDato(boss);
 		nuevoEnemigo.setDato(enemy);
-		listaEnemigos.reemplazar(random, nuevoEnemigo);
-		listaEnemigos.reemplazar(posJefe, nuevoJefe);
+		listaEnemigos.reemplazar(random, nuevoJefe);
+		listaEnemigos.reemplazar(posJefe, nuevoEnemigo);
 
 		System.out.println("random: " + random);
 		System.out.println("jefe: " + posJefe);

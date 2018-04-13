@@ -16,7 +16,7 @@ public class Disparo extends Sprite{
 	}
 	
 	public void move() {
-		this.bordes.y += 25;
+		this.bordes.y += 7;
 	}
 	
 	public void cargarSonido() {
@@ -24,6 +24,7 @@ public class Disparo extends Sprite{
 		shootSound.setVolume(0,1f);
 		shootSound.play();
 	}
+	
 	public void disparar(Disparo shot, NavePrincipal nave) {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			if(!this.disparado){

@@ -28,6 +28,7 @@ public class HileraC extends AbstractScreen {
 
 	public HileraC(GameMain main) {
 		super(main);
+		this.tipo = "HileraC";
 		this.listaEnemigos = (ListaCircular<Enemigo>) ListaEnemigoFactory.getLista("claseC");
 	}
 
@@ -113,8 +114,9 @@ public class HileraC extends AbstractScreen {
 			if (listaEnemigos.getDato(i).isShooted()) {
 				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")
 						&& listaEnemigos.getDato(i).getResistencia() == 1 && !listaEnemigos.isEmpty()) {
-					int random = (int) (Math.random() * listaEnemigos.getTamaño()-1);	
-					int resisRandom = (int) (Math.random() * 4)+2;	
+					int random = (int) (Math.random() * listaEnemigos.getTamaño()-1);
+					
+					int resisRandom = (int) (Math.random() * 4 + 2);	
 					Enemigo newBoss = new Enemigo(listaEnemigos.getDato(random).getBordes().x, listaEnemigos.getDato(random).getBordes().y, 
 							resisRandom, "boss2.png", "boss");
 					NodoCircular<Enemigo> boss = new NodoCircular<Enemigo>();

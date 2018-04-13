@@ -25,6 +25,7 @@ public class HileraA extends AbstractScreen {
 	
 	public HileraA(GameMain main) {
 		super(main);
+		this.tipo = "HileraA";
 		this.listaEnemigos = (ListaSimple<Enemigo>) ListaEnemigoFactory.getLista("claseA");
 	}
 	
@@ -83,22 +84,26 @@ public class HileraA extends AbstractScreen {
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			if(!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				listaEnemigos.getDato(i).getBordes().x -= 1/05f;
+				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
 			}
 			else if(listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				for (int x = listaEnemigos.getTamaño()-1; x >= 0;x --) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;	
+					listaEnemigos.getDato(x).getBordes().y -= 40;	
 				}
 				revisaColision=2;
 			}
 			if (!listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
-				listaEnemigos.getDato(i).getBordes().x += 1/05f;
+				listaEnemigos.getDato(i).getBordes().x += 0.7f;
 			}
 			else if(listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
 				for(int x = 0; x < listaEnemigos.getTamaño(); x ++) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;
+					listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
 				revisaColision = 1;
+			}
+			if(listaEnemigos.getDato(i).getBordes().y <= 50) {
+				this.dispose();
+				
 			}
 		}		
 	}

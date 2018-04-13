@@ -171,12 +171,12 @@ public class ListaSimple<T> extends Lista {
     	NodoSimple<T> aux = this.primero;
     	int cont = 0;
     	while(aux!=nodo) {
-    		lista.getDato(cont).getBordes().x += 25;
+    		lista.getDato(cont).getBordes().x += 37;
     		aux = aux.getSiguiente();
     		cont ++;
     	}
     	while(cont < lista.tamaño) {
-    		lista.getDato(cont).getBordes().x -= 25;
+    		lista.getDato(cont).getBordes().x -= 37;
     		cont ++;
     	}
     }

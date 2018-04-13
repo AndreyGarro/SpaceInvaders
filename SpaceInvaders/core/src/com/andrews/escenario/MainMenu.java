@@ -22,6 +22,7 @@ public class MainMenu extends AbstractScreen{
 	
 	public MainMenu(GameMain main) {
 		super(main);
+		this.tipo = "main";
 	}
 	
 	@Override
@@ -64,7 +65,7 @@ public class MainMenu extends AbstractScreen{
 			}
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-			main.fondo = new HileraC(main);  //Aqui llama la hilera que necesita
+			main.fondo = new Nivel1(main);  //Aqui llama la hilera que necesita
 			main.setScreen(main.fondo);
 		}
 		batch.end();

@@ -6,11 +6,13 @@ import com.badlogic.gdx.Screen;
 public abstract class AbstractScreen implements Screen {
 
 	protected GameMain main;
+	protected String tipo;
 	
 	public AbstractScreen(GameMain main) {
 		this.main = main;
 	}
 	
+
 	@Override
 	public void render(float delta) {
 		
