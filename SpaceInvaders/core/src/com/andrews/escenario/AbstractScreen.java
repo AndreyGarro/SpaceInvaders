@@ -7,6 +7,7 @@ public abstract class AbstractScreen implements Screen {
 
 	protected GameMain main;
 	protected String tipo;
+	protected Nivel1 nivel;
 	
 	public AbstractScreen(GameMain main) {
 		this.main = main;

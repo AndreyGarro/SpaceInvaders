@@ -25,10 +25,12 @@ public class HileraC extends AbstractScreen {
 	private Disparo shot;
 	public int tempo = 0;
 	private Sound enemyDeadSound;
+	private Nivel1 nivel;
 
-	public HileraC(GameMain main) {
+	public HileraC(GameMain main, Nivel1 nivel) {
 		super(main);
 		this.tipo = "HileraC";
+		this.nivel = nivel;
 		this.listaEnemigos = (ListaCircular<Enemigo>) ListaEnemigoFactory.getLista("claseC");
 	}
 

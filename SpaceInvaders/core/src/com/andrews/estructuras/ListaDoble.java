@@ -1,8 +1,6 @@
 package com.andrews.estructuras;
 
-import com.andrews.escenario.HileraB;
-import com.andrews.sprites.Enemigo;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.andrews.sprites.SpriteForEnemy;
 
 public class ListaDoble<T> extends Lista {
 
@@ -108,7 +106,7 @@ public class ListaDoble<T> extends Lista {
     	}
     }
     
-    public void eliminarPos(int pos, ListaDoble<Enemigo> lista) {
+    public void eliminarPos(int pos) {
     	if(pos>=0 && pos < this.tamaño) {
     		if (pos == 0) {
     			this.primero = primero.getSiguiente();
@@ -119,23 +117,23 @@ public class ListaDoble<T> extends Lista {
     				aux = aux.getSiguiente();
     			}
     			NodoDoble<T> siguiente = aux.getSiguiente();
-    			this.mover(siguiente, lista);
+    			this.mover(siguiente);
     			aux.setSiguiente(siguiente.getSiguiente());
     		}
     		this.tamaño --;
     	}
     }
     
-    public void mover(NodoDoble<T> nodo, ListaDoble<Enemigo> lista) {
+    public void mover(NodoDoble<T> nodo) {
     	NodoDoble<T> aux = this.primero;
     	int cont = 0;
     	while(aux!=nodo) {
-    		lista.getDato(cont).getBordes().x += 25;
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x += 37;
     		aux = aux.getSiguiente();
     		cont ++;
     	}
-    	while(cont < lista.tamaño) {
-    		lista.getDato(cont).getBordes().x -= 25;
+    	while(cont < this.tamaño) {
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x -= 37;
     		cont ++;
     	}
     }

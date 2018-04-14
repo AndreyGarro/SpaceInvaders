@@ -33,14 +33,16 @@ public class HileraBasica extends AbstractScreen {
 	private int revisaColision = 1;
 	private Disparo shot;
 	private Sound enemyDeadSound;
+	private Nivel1 nivel;
 	/**
 	 * Inicializa el escenario
 	 * @param main objeto de tipo GameMain para inicializar el constructor de la super clase.
 	 * @param listaEnemigos lista de los enemigos a mostrar en pantalla.e
 	 */
-	public HileraBasica(GameMain main) {
+	public HileraBasica(GameMain main, Nivel1 nivel) {
 		super(main);
 		this.tipo = "HileraBasica";
+		this.nivel = nivel;
 		this.listaEnemigos = (ListaSimple<Enemigo>) ListaEnemigoFactory.getLista("basica");
 		}
 	//Fin  del constructor
@@ -123,6 +125,9 @@ public class HileraBasica extends AbstractScreen {
 	private void revisaVacia(ListaSimple<Enemigo> lista) {
 		if (lista.isEmpty()) {
 			this.dispose();
+			Nivel1 nivel= new Nivel1(main);
+			//nivel.hileraActual = "hileraA";
+			main.setScreen(nivel);
 			
 		}
 	}

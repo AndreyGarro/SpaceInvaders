@@ -8,29 +8,22 @@ import java.util.ArrayList;
 
 import com.andrews.estructuras.*;;
 
+@SuppressWarnings("unused")
 public class Nivel1 extends AbstractScreen {
 	
-	private String[] listaHileras;
-	public String hileraActual = "hileraBasica";
+	@SuppressWarnings("rawtypes")
+	private ArrayList[] listaHileras;
+	public int nivel = 1;
 
 	public Nivel1(GameMain main) {
-		super(main);
-		String[] hileras = new String[] {"hileraBasica", "hileraA", "hileraB"};              
+		super(main);              
 	}
 	
 	@Override
 	public void render(float delta) {
-		if(hileraActual.equals("hileraBasica")) {
-			main.fondo = new HileraBasica(main);
-			main.setScreen(main.fondo);
-			this.hileraActual = "hileraA";
-		}
-		else if(hileraActual.equals("hileraA")) {
-			main.fondo = new HileraA(main);
-			main.setScreen(main.fondo);
-		}
-		else if(hileraActual.equals("hileraB")) {
-			main.fondo = new HileraB(main);
+		if(nivel==1) {
+			ArrayList<String> hileras = new ArrayList<String>();
+			main.fondo = new HileraB(main, this);
 			main.setScreen(main.fondo);
 		}
 	}

@@ -60,7 +60,8 @@ public class Enemigo extends SpriteForEnemy {
 			return true;
 		}
 		else{
-			resistencia --;
+			System.out.println("holi");
+			this.resistencia --;
 			return false;
 		}
 	}

@@ -22,10 +22,13 @@ public class HileraA extends AbstractScreen {
 	private int revisaColision = 1;
 	private Disparo shot;
 	private Sound enemyDeadSound;
+	private Nivel1 nivel;
 	
-	public HileraA(GameMain main) {
+	@SuppressWarnings("unchecked")
+	public HileraA(GameMain main, Nivel1 nivel) {
 		super(main);
 		this.tipo = "HileraA";
+		this.nivel = nivel;
 		this.listaEnemigos = (ListaSimple<Enemigo>) ListaEnemigoFactory.getLista("claseA");
 	}
 	

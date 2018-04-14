@@ -48,7 +48,9 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			int random = (int) (Math.random()*10);
 			while(cont < 10) {
 				if(cont == random) {
-					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
+					int x = (int) (Math.random()*4 + 1);
+					System.out.println(x	);
+					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, x, "boss2.png", "boss"));
 					cont ++;
 					xPos += 75;
 				}
