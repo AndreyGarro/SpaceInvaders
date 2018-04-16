@@ -1,0 +1,51 @@
+package com.andrews.escenario;
+
+import com.andrews.spaceinvaders.GameMain;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.andrews.estructuras.*;
+import com.andrews.estructuras.*;
+
+import java.util.ArrayList;
+
+import com.andrews.estructuras.*;;
+
+@SuppressWarnings("unused")
+public class Nivel1 extends AbstractScreen {
+	
+	private ArrayList<AbstractScreen> listaHileras;
+	public int nivel = 1;
+	public int valorEliminar = 0;
+	private BitmapFont fuente;
+	private SpriteBatch batch;
+	
+	public Nivel1(GameMain main) {
+		super(main);
+		fuente = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"), Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		this.listaHileras = new ArrayList<AbstractScreen>();
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		
+	}
+	
+	@Override
+	public void render(float delta) {
+		ArrayList<String> hileras = new ArrayList<String>();
+		fuente.setColor(0, 1f, 0, 1.0f);
+		batch.begin();
+		fuente.draw(batch, "Puntaje: ", 0, 600, getFont(fuente, "Puntaje: "), 600);
+		batch.end();
+		main.fondo = listaHileras.get(0);
+		main.setScreen(main.fondo);
+		
+	}
+	
+}

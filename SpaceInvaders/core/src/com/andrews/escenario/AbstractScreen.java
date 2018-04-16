@@ -48,6 +48,10 @@ public abstract class AbstractScreen implements Screen {
 	public void dispose() {
 
 	}
+	
+	public String getTipo() {
+		return this.tipo;
+	}
 
 
 }

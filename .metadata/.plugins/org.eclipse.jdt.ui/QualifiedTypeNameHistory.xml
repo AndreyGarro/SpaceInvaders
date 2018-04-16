@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Sprite"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.ApplicationAdapter"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.ScreenAdapter"/>
+<fullyQualifiedTypeName name="java.nio.channels.ScatteringByteChannel"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.GL20"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Animation"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureRegion"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture"/>
+<fullyQualifiedTypeName name="java.lang.ProcessBuilder.Redirect"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.NodoSimple"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.EscenarioBatalla"/>
+<fullyQualifiedTypeName name="java.util.prefs.AbstractPreferences"/>
+<fullyQualifiedTypeName name="java.security.Key"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Input"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Input.Keys"/>
+<fullyQualifiedTypeName name="java.sql.Time"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.utils.Timer"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.NavePrincipal"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.ListaSimple"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.Disparo"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.AbstractScreen"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.Enemigo"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+<fullyQualifiedTypeName name="com.andrews.sprites.Disparo"/>
+<fullyQualifiedTypeName name="com.andrews.sprites.NavePrincipal"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Game"/>
+<fullyQualifiedTypeName name="com.andrews.escenario.EscenarioBatalla"/>
+<fullyQualifiedTypeName name="com.andrews.sprites.Enemigo"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.NodoSimple"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.ListaEnemigoFactory"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.ListaSimple"/>
+<fullyQualifiedTypeName name="com.andrews.escenario.Nivel2"/>
+<fullyQualifiedTypeName name="java.lang.AbstractMethodError"/>
+<fullyQualifiedTypeName name="com.andrews.spaceinvaders.GameMain"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Screen"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.ListaEnemigoFactory"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.ListaDoble"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.NodoDoble"/>
+<fullyQualifiedTypeName name="com.andrews.escenario.Nivel3"/>
+</qualifiedTypeNameHistroy>

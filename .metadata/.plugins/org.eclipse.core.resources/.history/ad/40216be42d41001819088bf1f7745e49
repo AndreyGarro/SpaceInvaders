@@ -1,0 +1,42 @@
+package com.andrews.escenario;
+
+import com.andrews.spaceinvaders.GameMain;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.andrews.estructuras.*;
+import com.andrews.estructuras.*;
+
+import java.util.ArrayList;
+
+import com.andrews.estructuras.*;;
+
+@SuppressWarnings("unused")
+public class Nivel1 extends AbstractScreen {
+	
+	@SuppressWarnings("rawtypes")
+	private ArrayList<Lista> listaHileras;
+	public int nivel = 1;
+
+	@SuppressWarnings("unchecked")
+	public Nivel1(GameMain main) {
+		super(main);
+		this.listaHileras = new ArrayList<Lista>();
+		listaHileras.add(ListaEnemigoFactory.getLista("basica"));
+		listaHileras.add(ListaEnemigoFactory.getLista("claseA"));
+		listaHileras.add(ListaEnemigoFactory.getLista("basica"));
+		listaHileras.add(ListaEnemigoFactory.getLista("claseB"));
+		listaHileras.add(ListaEnemigoFactory.getLista("basica"));
+		listaHileras.add(ListaEnemigoFactory.getLista("claseA"));
+		listaHileras.add(ListaEnemigoFactory.getLista("claseB"));
+		System.out.println(listaHileras);
+
+		
+	}
+	
+	@Override
+	public void render(float delta) {
+		
+		
+	}
+	
+}

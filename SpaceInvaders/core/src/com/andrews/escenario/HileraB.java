@@ -8,9 +8,11 @@ import com.andrews.sprites.Disparo;
 import com.andrews.sprites.Enemigo;
 import com.andrews.sprites.NavePrincipal;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HileraB extends AbstractScreen {
@@ -25,13 +27,21 @@ public class HileraB extends AbstractScreen {
 	public int tempo = 0;
 	private Sound enemyDeadSound;
 	private ArrayList<Integer> eliminados = new ArrayList<Integer>();
+	private ArrayList<AbstractScreen> listaHileras;
+	private Nivel1 nivel;
+	private BitmapFont puntajeActual;
+	private BitmapFont hileraActual;
+	private BitmapFont sigHilera;
+	private Texture cuadro;
 
 	@SuppressWarnings("unchecked")
-	public HileraB(GameMain main, Nivel1 nivel) {
+	public HileraB(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel1 nivel) {
 		super(main);
 		this.tipo = "HileraB";
+		this.listaHileras = listaHileras;
 		this.nivel = nivel;
 		this.listaEnemigos = (ListaDoble<Enemigo>) ListaEnemigoFactory.getLista("claseB");
+
 	}
 
 	/**
@@ -45,7 +55,15 @@ public class HileraB extends AbstractScreen {
 		background = new Texture(Gdx.files.internal("background.jpg"));
 		nave = new NavePrincipal((Gdx.graphics.getWidth() / 2) - 25, 10, "ship.png");
 		shot = new Disparo(500, 900, "laser.png");
+		cuadro = new Texture(Gdx.files.internal("cuadro.png"));
 		enemyDeadSound = Gdx.audio.newSound(Gdx.files.internal("enemyKilled.mp3"));
+		puntajeActual = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		hileraActual = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		sigHilera = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		this.nivel.valorEliminar = (int) (Math.random() * this.listaHileras.size());
 	}
 
 	/**
@@ -65,6 +83,10 @@ public class HileraB extends AbstractScreen {
 		nave.move();
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.draw(cuadro, 10, 537, 780, 50);
+		puntajeActual.draw(batch, "Puntaje:  " + nivel.puntaje, 20, 580);
+		hileraActual.draw(batch, "Hilera Actual: " + this.tipo, 220, 580);
+		sigHilera.draw(batch, "Sig. Hilera: " + this.listaHileras.get(nivel.valorEliminar).getTipo(), 530, 580);
 		nave.draw(batch);
 		shot.draw(batch);
 		shot.disparar(shot, nave);
@@ -115,6 +137,10 @@ public class HileraB extends AbstractScreen {
 				}
 				revisaColision = 1;
 			}
+			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+				main.fondo = new MainMenu(main);
+				main.setScreen(main.fondo);
+			}
 			
 		}		
 	}
@@ -126,16 +152,27 @@ public class HileraB extends AbstractScreen {
 			if (listaEnemigos.getDato(i).isShooted()) {
 				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")
 						&& listaEnemigos.getDato(i).getResistencia() == 1) {
-					// listaEnemigos.eliminarTodo();
-					System.out.println("Felicidades");
-					return;
+					nivel.puntaje += 50;
+					listaEnemigos.eliminarTodo();
+					revisaVacia();
 				}
-				if (listaEnemigos.getDato(i).getResistencia() == 1) {
+				else if (listaEnemigos.getDato(i).getResistencia() == 1) {
 					enemyDeadSound.play();
+					nivel.puntaje += 10;
 					this.eliminados.add(i);
-					//listaEnemigos.eliminarPos(i);
 				}
 			}
+		}
+	}
+	
+	private void revisaVacia() {
+		if (this.listaEnemigos.isEmpty()) {
+			this.dispose();
+			if(this.listaHileras.isEmpty()) {
+				System.out.println("lista vacia");
+			}
+			this.dispose();
+			main.setScreen(listaHileras.get(nivel.valorEliminar));
 		}
 	}
 

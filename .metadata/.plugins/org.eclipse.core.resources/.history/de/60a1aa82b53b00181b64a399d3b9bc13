@@ -1,0 +1,79 @@
+package com.andrews.estructuras;
+
+public class ListaCircular<T> extends Lista {
+	
+	private NodoCircular<T> primero;
+	private NodoCircular<T> ultimo;
+	private int tamaño;
+	
+	public ListaCircular(){
+		this.primero = null;
+		this.ultimo = null;
+		this.tamaño = 0;
+	}
+	
+	public boolean isEmpty() {
+		return this.primero == null;
+	}
+	
+	public int getTamaño() {
+		return this.tamaño;
+	}
+	
+	public void agregarAlInicio(T dato) {
+		NodoCircular<T> nuevo = new NodoCircular<T>();
+		if(this.isEmpty()) {
+			this.primero = nuevo;
+			this.ultimo = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		else {
+			nuevo.setSiguiente(primero);
+			primero = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		this.tamaño ++;
+	}
+	
+	public void agregarAlFinal(T dato) {
+		NodoCircular<T> nuevo = new NodoCircular<T>();
+		nuevo.setDato(dato);
+		if(this.isEmpty()) {
+			this.primero = nuevo;
+			this.ultimo = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		else {
+			ultimo.setSiguiente(nuevo);
+			nuevo.setSiguiente(primero);
+			ultimo = nuevo;
+		}
+		this.tamaño ++;
+	}
+	
+	public T getDato(int pos) {
+		NodoCircular<T> aux = primero;
+    	int cont = 0;
+    	while(cont != pos) {
+    		aux = aux.getSiguiente();
+    		cont ++;
+    	}
+    	return aux.getDato();
+	}
+	
+	public NodoCircular<T> getNodo(int pos){
+    	if(pos == 0) {
+    		return this.primero;
+   		}
+   		else {
+   			NodoCircular<T> aux = primero;
+   			for(int i = 0; i < pos-1; i++) {    				
+   				aux = aux.getSiguiente();
+    		}
+    		return aux;
+    	}
+	}
+	
+	
+	
+}

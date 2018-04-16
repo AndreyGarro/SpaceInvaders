@@ -20,6 +20,11 @@ public class ListaDoble<T> extends Lista {
 		}
 	}
 	
+	public void eliminarTodo() {
+		this.primero = null;
+		this.tamaño = 0;
+	}
+	
 	public void agregarAlInicio(T dato) {
 		NodoDoble<T> nuevo = new NodoDoble<T>();
 		nuevo.setDato(dato);

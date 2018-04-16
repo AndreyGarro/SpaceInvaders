@@ -2,7 +2,7 @@ package com.andrews.estructuras;
 
 import com.andrews.sprites.Enemigo;
 
-public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
+public class ListaEnemigoFactory{
 
 
 	private ListaEnemigoFactory() {
@@ -11,8 +11,8 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 	public static Lista getLista(String hilera){
 		if (hilera.equals("basica")) {
 			int cont = 0;
-			int xPos = 20;
-			int yPos = 500;
+			int xPos = 40;
+			int yPos = 475;
 			ListaSimple<Enemigo> listaEnemigosBasica = new ListaSimple<Enemigo>();
 			while(cont < 10) {
 				listaEnemigosBasica.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
@@ -25,7 +25,7 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			ListaSimple<Enemigo> listaEnemigosClaseA = new ListaSimple<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
-			int yPos = 500;
+			int yPos = 475;
 			int random = (int) (Math.random()*10);
 			while(cont < 10) {
 				if(cont == random) {
@@ -44,12 +44,11 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			ListaDoble<Enemigo> listaEnemigosClaseB = new ListaDoble<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
-			int yPos = 500;
+			int yPos = 475;
 			int random = (int) (Math.random()*10);
 			while(cont < 10) {
 				if(cont == random) {
 					int x = (int) (Math.random()*4 + 1);
-					System.out.println(x	);
 					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, x, "boss2.png", "boss"));
 					cont ++;
 					xPos += 75;
@@ -65,7 +64,7 @@ public class ListaEnemigoFactory extends ListaSimple<Enemigo> {
 			ListaCircular<Enemigo> listaEnemigosClaseC = new ListaCircular<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
-			int yPos = 500;
+			int yPos = 475;
 			int random = (int) (Math.random()*10);
 			while(cont < 75) {
 				if(cont == random) {

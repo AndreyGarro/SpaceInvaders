@@ -1,0 +1,181 @@
+package com.andrews.escenario;
+
+import java.util.ArrayList;
+
+import com.andrews.estructuras.*;
+import com.andrews.spaceinvaders.GameMain;
+import com.andrews.sprites.Disparo;
+import com.andrews.sprites.Enemigo;
+import com.andrews.sprites.NavePrincipal;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class HileraB extends AbstractScreen {
+
+	// Atributos de la clase
+	private SpriteBatch batch;
+	private Texture background;
+	private NavePrincipal nave;
+	private ListaDoble<Enemigo> listaEnemigos;
+	private int revisaColision = 1;
+	private Disparo shot;
+	public int tempo = 0;
+	private Sound enemyDeadSound;
+	private ArrayList<Integer> eliminados = new ArrayList<Integer>();
+
+	@SuppressWarnings("unchecked")
+	public HileraB(GameMain main ) {
+		super(main);
+		this.tipo = "HileraB";
+		this.listaEnemigos = (ListaDoble<Enemigo>) ListaEnemigoFactory.getLista("claseB");
+	}
+
+	/**
+	 * Se encarga de inicializar el fondo y la nave principal. Tambien crea el
+	 * SpriteBatch que se encarga de agrupar los sprites y/o dibujos que se quieran
+	 * mostrar.
+	 */
+	@Override
+	public void show() {
+		batch = new SpriteBatch(); // agrupacion de sprites u objetos que se vayan a dibujar
+		background = new Texture(Gdx.files.internal("background.jpg"));
+		nave = new NavePrincipal((Gdx.graphics.getWidth() / 2) - 25, 10, "ship.png");
+		shot = new Disparo(500, 900, "laser.png");
+		enemyDeadSound = Gdx.audio.newSound(Gdx.files.internal("enemyKilled.mp3"));
+	}
+
+	/**
+	 * Limpia el buffer de dibujo e inicializa los movimientos de la nave principal,
+	 * tambien inicia el batch donde se dibujarán los distintos elementos y
+	 * realizarán sus acciones correspondientes, al final termina el batch
+	 * 
+	 * @param delta recibe la cantidad de fotogramas por segundo          
+	 */
+	@Override
+	public synchronized void render(float delta) {
+		// Limpia el buffer de dibujo
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//
+		tempo ++;
+		nave.move();
+		batch.begin();
+		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		nave.draw(batch);
+		shot.draw(batch);
+		shot.disparar(shot, nave);
+		shot.move();
+		shot.disparado();
+		if (!this.listaEnemigos.isEmpty()) {
+			for (int i = 0; i < this.listaEnemigos.getTamaño(); i++) {
+				this.listaEnemigos.getDato(i).draw(batch);
+				try {
+					revisaImpacto(i);
+					if(tempo == 150) {
+						cambioAleatorio();
+						tempo = 0;
+					}
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+			for (Integer e : this.eliminados) {
+				this.listaEnemigos.eliminarPos(e);
+			}
+			this.eliminados.clear();
+			movimientoEnemigos();
+		}
+		batch.end();
+	}
+
+	/**
+	 * Realiza el movimiento de los lados y hacia abajo de los enemigos.
+	 */
+	private void movimientoEnemigos() {
+		for (int i = 0; i < this.listaEnemigos.getTamaño(); i++) {
+			if(!this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				this.listaEnemigos.getDato(i).getBordes().x -= 0.7f;
+			}
+			else if(this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = this.listaEnemigos.getTamaño()-1; x >= 0;x --) {
+					this.listaEnemigos.getDato(x).getBordes().y -= 40;	
+				}
+				revisaColision=2;
+			}
+			if (!this.listaEnemigos.getDato(this.listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+				this.listaEnemigos.getDato(i).getBordes().x += 0.7f;
+			}
+			else if(this.listaEnemigos.getDato(this.listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+				for(int x = 0; x < this.listaEnemigos.getTamaño(); x ++) {
+					this.listaEnemigos.getDato(x).getBordes().y -= 40;
+				}
+				revisaColision = 1;
+			}
+			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+				main.fondo = new MainMenu(main);
+				main.setScreen(main.fondo);
+			}
+			
+		}		
+	}
+	
+	private void revisaImpacto(int i){
+		if (shot.getBordes().overlaps(listaEnemigos.getDato(i).getBordes())) {
+			shot.getTexture().dispose();
+			shot = new Disparo(500, 900, "laser.png");
+			if (listaEnemigos.getDato(i).isShooted()) {
+				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")
+						&& listaEnemigos.getDato(i).getResistencia() == 1) {
+					listaEnemigos.eliminarTodo();
+					revisaVacia();
+					return;
+				}
+				if (listaEnemigos.getDato(i).getResistencia() == 1) {
+					enemyDeadSound.play();
+					this.eliminados.add(i);
+				}
+			}
+		}
+	}
+	
+	private void revisaVacia() {
+		if (this.listaEnemigos.isEmpty()) {
+			this.dispose();
+			if(this.listaHileras.isEmpty()) {
+				System.out.println("lista vacia");
+			}
+			System.out.println("entre");
+			this.dispose();
+			int random = (int) (Math.random() * this.listaHileras.size()-1);
+			main.setScreen((Screen) listaHileras.get(random));
+		}
+	}
+
+	public void cambioAleatorio() {
+		int posJefe = 0;
+		for(int i=0; i < this.listaEnemigos.getTamaño(); i++) {
+			if(this.listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")) {
+				posJefe = i;
+				break;
+			}
+		}
+		int random = (int) (Math.random() * this.listaEnemigos.getTamaño() - 1);		
+		NodoDoble<Enemigo> nuevoEnemigo = new NodoDoble<Enemigo>();
+		NodoDoble<Enemigo> nuevoJefe = new NodoDoble<Enemigo>();
+		if(!(posJefe == random)) {
+			Enemigo enemy = new Enemigo(this.listaEnemigos.getDato(posJefe).getBordes().x, this.listaEnemigos.getDato(posJefe).getBordes().y, 1, 
+					"enemySprite.png", "enemy");
+			System.out.println(this.listaEnemigos.getDato(posJefe).getTipoEnemigo());
+			Enemigo boss = new Enemigo(this.listaEnemigos.getDato(random).getBordes().x, this.listaEnemigos.getDato(random).getBordes().y, 
+					this.listaEnemigos.getDato(posJefe).getResistencia(), "boss1.png", "boss");
+			nuevoJefe.setDato(boss);
+			nuevoEnemigo.setDato(enemy);
+			listaEnemigos.reemplazar(random, nuevoJefe);
+			listaEnemigos.reemplazar(posJefe, nuevoEnemigo);
+		}
+	}	
+}

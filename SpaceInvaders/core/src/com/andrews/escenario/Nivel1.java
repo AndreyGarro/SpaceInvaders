@@ -1,31 +1,40 @@
 package com.andrews.escenario;
 
-import com.andrews.spaceinvaders.GameMain;
-import com.badlogic.gdx.graphics.Texture;
-import com.andrews.estructuras.*;
-
 import java.util.ArrayList;
 
-import com.andrews.estructuras.*;;
+import com.andrews.spaceinvaders.GameMain;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;;
 
 @SuppressWarnings("unused")
 public class Nivel1 extends AbstractScreen {
-	
-	@SuppressWarnings("rawtypes")
-	private ArrayList[] listaHileras;
+
+	private ArrayList<AbstractScreen> listaHileras;
 	public int nivel = 1;
+	public int valorEliminar = 0;
+	public int puntaje = 0;
 
 	public Nivel1(GameMain main) {
-		super(main);              
+		super(main);
+		this.listaHileras = new ArrayList<AbstractScreen>();
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+
 	}
-	
+
 	@Override
 	public void render(float delta) {
-		if(nivel==1) {
-			ArrayList<String> hileras = new ArrayList<String>();
-			main.fondo = new HileraB(main, this);
-			main.setScreen(main.fondo);
-		}
+		ArrayList<String> hileras = new ArrayList<String>();
+		
+		main.fondo = listaHileras.get(0);
+		main.setScreen(main.fondo);
+
 	}
-	
+
 }

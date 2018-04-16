@@ -1,5 +1,8 @@
 package com.andrews.escenario;
 
+import java.util.ArrayList;
+
+import com.andrews.estructuras.Lista;
 import com.andrews.estructuras.ListaEnemigoFactory;
 import com.andrews.estructuras.ListaSimple;
 import com.andrews.spaceinvaders.GameMain;
@@ -7,9 +10,11 @@ import com.andrews.sprites.Disparo;
 import com.andrews.sprites.Enemigo;
 import com.andrews.sprites.NavePrincipal;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HileraA extends AbstractScreen {
@@ -23,13 +28,23 @@ public class HileraA extends AbstractScreen {
 	private Disparo shot;
 	private Sound enemyDeadSound;
 	private Nivel1 nivel;
+	private ArrayList<AbstractScreen> listaHileras;
+	private BitmapFont puntajeActual;
+	private BitmapFont hileraActual;
+	private BitmapFont sigHilera;
+	private Texture cuadro;
 	
 	@SuppressWarnings("unchecked")
-	public HileraA(GameMain main, Nivel1 nivel) {
+	public HileraA(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel1 nivel) {
 		super(main);
 		this.tipo = "HileraA";
+		this.listaHileras = listaHileras;
 		this.nivel = nivel;
 		this.listaEnemigos = (ListaSimple<Enemigo>) ListaEnemigoFactory.getLista("claseA");
+		puntajeActual = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		hileraActual = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
 	}
 	
 	/**
@@ -43,6 +58,10 @@ public class HileraA extends AbstractScreen {
 		background = new Texture(Gdx.files.internal("background.jpg"));
 		nave = new NavePrincipal((Gdx.graphics.getWidth()/2)-25, 10, "ship.png");
 		shot = new Disparo(500, 900, "laser.png");
+		cuadro = new Texture(Gdx.files.internal("cuadro.png"));
+		sigHilera = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
+				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
+		this.nivel.valorEliminar = (int) (Math.random() * this.listaHileras.size());
 		enemyDeadSound = Gdx.audio.newSound(Gdx.files.internal("enemyKilled.mp3"));
 	}
 	
@@ -61,6 +80,10 @@ public class HileraA extends AbstractScreen {
 		nave.move();
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.draw(cuadro, 10, 537, 780, 50);
+		puntajeActual.draw(batch, "Puntaje:  " + nivel.puntaje, 20, 580);
+		hileraActual.draw(batch, "Hilera Actual: " + this.tipo, 220, 580);
+		sigHilera.draw(batch, "Sig. Hilera: " + this.listaHileras.get(nivel.valorEliminar).getTipo(), 530, 580);
 		nave.draw(batch);
 		shot.draw(batch);
 		shot.disparar(shot, nave);
@@ -70,6 +93,7 @@ public class HileraA extends AbstractScreen {
 			for(int i = 0; i < listaEnemigos.getTamaño(); i++) {
 				listaEnemigos.getDato(i).draw(batch);
 				try {
+					revisaVacia();
 					revisaImpacto(i);
 				} catch (Throwable e) {
 					e.printStackTrace();
@@ -104,11 +128,22 @@ public class HileraA extends AbstractScreen {
 				}
 				revisaColision = 1;
 			}
-			if(listaEnemigos.getDato(i).getBordes().y <= 50) {
-				this.dispose();
-				
+			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+				main.fondo = new MainMenu(main);
+				main.setScreen(main.fondo);
 			}
 		}		
+	}
+	
+	private void revisaVacia() {
+		if (this.listaEnemigos.isEmpty()) {
+			this.dispose();
+			if(this.listaHileras.isEmpty()) {
+				System.out.println("lista vacia");
+			}
+			this.dispose();
+			main.setScreen(listaHileras.get(nivel.valorEliminar));
+		}
 	}
 	
 	private void revisaImpacto(int i) throws Throwable {
@@ -117,12 +152,14 @@ public class HileraA extends AbstractScreen {
 			shot = new Disparo(500, 900, "laser.png");
 			if(listaEnemigos.getDato(i).isShooted()) {
 				if(listaEnemigos.getDato(i).getTipoEnemigo().equals("boss") && listaEnemigos.getDato(i).getResistencia() == 1) {
+					nivel.puntaje += 50;
 					listaEnemigos.eliminarTodo();
-					System.out.println("Felicidades");
+					revisaVacia();
 					return;
 				}
 				if (listaEnemigos.getDato(i).getResistencia() == 1) {
 					enemyDeadSound.play();
+					nivel.puntaje += 10;
 					listaEnemigos.eliminarPos(i, listaEnemigos);
 				}
 			}

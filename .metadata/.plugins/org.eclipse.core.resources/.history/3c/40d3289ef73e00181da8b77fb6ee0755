@@ -1,0 +1,11 @@
+package com.andrews.escenario;
+
+import com.andrews.spaceinvaders.GameMain;
+
+public class Nivel1 extends AbstractScreen {
+
+	public Nivel1(GameMain main) {
+		super(main);
+	}
+	
+	}
