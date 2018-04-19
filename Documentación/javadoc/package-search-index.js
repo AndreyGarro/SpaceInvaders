@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"com.andrews.escenario"},{"l":"com.andrews.estructuras"},{"l":"com.andrews.spaceinvaders.desktop"},{"l":"com.andrews.sprites"}]
