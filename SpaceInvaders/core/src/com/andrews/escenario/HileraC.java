@@ -3,22 +3,26 @@ package com.andrews.escenario;
 import java.util.ArrayList;
 
 import com.andrews.estructuras.ListaCircular;
-import com.andrews.estructuras.ListaDoble;
 import com.andrews.estructuras.ListaEnemigoFactory;
 import com.andrews.estructuras.NodoCircular;
-import com.andrews.estructuras.NodoDoble;
 import com.andrews.spaceinvaders.GameMain;
 import com.andrews.sprites.Disparo;
 import com.andrews.sprites.Enemigo;
 import com.andrews.sprites.NavePrincipal;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ *
+ * Crea la hilera de enemigos de clase A junto con todas sus funcionalidades.
+ * 
+ * @author andrey
+ *
+ */
 public class HileraC extends AbstractScreen {
 	// Atributos de la clase
 	private SpriteBatch batch;
@@ -30,14 +34,14 @@ public class HileraC extends AbstractScreen {
 	public int tempo = 0;
 	private Sound enemyDeadSound;
 	private ArrayList<AbstractScreen> listaHileras;
-	private Nivel1 nivel;
+	private Nivel nivel;
 	private BitmapFont puntajeActual;
 	private BitmapFont hileraActual;
 	private BitmapFont sigHilera;
 	private Texture cuadro;
 
-
-	public HileraC(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel1 nivel ) {
+	@SuppressWarnings("unchecked")
+	public HileraC(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel nivel) {
 		super(main);
 		this.tipo = "HileraC";
 		this.listaHileras = listaHileras;
@@ -82,7 +86,7 @@ public class HileraC extends AbstractScreen {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//
-		tempo ++;
+		tempo++;
 		nave.move();
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -92,15 +96,15 @@ public class HileraC extends AbstractScreen {
 		sigHilera.draw(batch, "Sig. Hilera: " + this.listaHileras.get(nivel.valorEliminar).getTipo(), 530, 580);
 		nave.draw(batch);
 		shot.draw(batch);
-		shot.disparar(shot, nave);
+		shot.disparar(nave);
 		shot.move();
 		shot.disparado();
 		if (!listaEnemigos.isEmpty()) {
 			for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 				listaEnemigos.getDato(i).draw(batch);
 				try {
-					revisaImpacto(i);
 					revisaVacia();
+					revisaImpacto(i);
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
@@ -116,7 +120,7 @@ public class HileraC extends AbstractScreen {
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				listaEnemigos.getDato(i).getBordes().x -= 1 / 05f;
+				listaEnemigos.getDato(i).getBordes().x -= 0.5f;
 			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
 					listaEnemigos.getDato(x).getBordes().y -= 20;
@@ -124,52 +128,72 @@ public class HileraC extends AbstractScreen {
 				revisaColision = 2;
 			}
 			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
-				listaEnemigos.getDato(i).getBordes().x += 1 / 05f;
+				listaEnemigos.getDato(i).getBordes().x += 0.7f;
 			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
 				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
 					listaEnemigos.getDato(x).getBordes().y -= 20;
 				}
 				revisaColision = 1;
 			}
-			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+			if (listaEnemigos.getDato(i).getBordes().y <= 70) {
 				main.fondo = new MainMenu(main);
 				main.setScreen(main.fondo);
 			}
 		}
 	}
-	
+
+	/**
+	 * Revisa cuando la lista y ArrayList de enemigos está vacía para hacer la
+	 * transicion de nivel.
+	 */
 	private void revisaVacia() {
 		if (this.listaEnemigos.isEmpty()) {
-			this.dispose();
-			if(this.listaHileras.isEmpty()) {
+			if (this.listaHileras.isEmpty()) {
 				System.out.println("lista vacia");
 			}
 			this.dispose();
 			main.setScreen(listaHileras.get(nivel.valorEliminar));
 		}
 	}
-	
+
+	/**
+	 * Revisa si un enemigo ha sido impactado por el disparo si lo fue lo elimina de
+	 * la lista.
+	 * 
+	 * @param pos
+	 *            posicion a revisar
+	 */
 	private void revisaImpacto(int i) {
 		if (shot.getBordes().overlaps(listaEnemigos.getDato(i).getBordes())) {
 			shot.getTexture().dispose();
 			shot = new Disparo(500, 900, "laser.png");
 			if (listaEnemigos.getDato(i).isShooted()) {
-				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")
-						&& listaEnemigos.getDato(i).getResistencia() == 1 && !listaEnemigos.isEmpty()) {
+				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss") && !listaEnemigos.isEmpty()) {
+					if (listaEnemigos.getTamaño() == 1) {
+						nivel.puntaje += 50;
+						listaEnemigos.eliminarPos(i);
+						revisaVacia();
+					}
 					nivel.puntaje += 50;
-					int random = (int) (Math.random() * listaEnemigos.getTamaño()-1);
-					int resisRandom = (int) (Math.random() * 4 + 2);	
-					Enemigo newBoss = new Enemigo(listaEnemigos.getDato(random).getBordes().x, listaEnemigos.getDato(random).getBordes().y, 
-							resisRandom, "boss2.png", "boss");
+					int random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
+					while (random == i) {
+						random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
+					}
+					int resisRandom = (int) (Math.random() * 4 + 2);
+					Enemigo newBoss = new Enemigo(listaEnemigos.getDato(random).getBordes().x,
+							listaEnemigos.getDato(random).getBordes().y, resisRandom, "boss2.png", "boss");
 					NodoCircular<Enemigo> boss = new NodoCircular<Enemigo>();
 					boss.setDato(newBoss);
-					System.out.println("random: " + random + " x: " + newBoss.getBordes().x + " y: " + newBoss.getBordes().y);
 					listaEnemigos.reemplazar(random, boss);
+				}
+				else {
+					System.out.println("hola");
+					
 				}
 				if (listaEnemigos.getDato(i).getResistencia() == 1) {
 					enemyDeadSound.play();
 					nivel.puntaje += 10;
-					listaEnemigos.eliminarPos(i, listaEnemigos);
+					listaEnemigos.eliminarPos(i);
 				}
 			}
 		}

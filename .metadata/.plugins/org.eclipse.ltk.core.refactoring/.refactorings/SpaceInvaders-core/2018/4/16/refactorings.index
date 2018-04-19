@@ -5,3 +5,9 @@
 1523873447490	Rename field 'fuente'
 1523873461539	Rename field 'fuente'
 1523873485366	Rename field 'fuente'
+1524009757358	Rename type 'Nivel1'
+1524035221656	Rename local variable 'i'
+1524035476149	Rename method 'create'
+1524098006733	Delete element
+1524098578408	Encapsulate field 'primero'
+1524098641920	Infer generic type arguments

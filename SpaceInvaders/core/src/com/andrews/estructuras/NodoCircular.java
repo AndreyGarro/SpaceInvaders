@@ -1,15 +1,25 @@
 package com.andrews.estructuras;
 
+/**
+ * Nodo para las listas circulares
+ * 
+ * @author andrey
+ * @param <T>
+ *            Nodo generico que guarda cualquier tipo de dato
+ */
 public class NodoCircular<T> {
-	
+
+	// Atributos de la Clase
 	private T dato;
 	private NodoCircular<T> siguiente;
 
+	// Constuctor
 	public NodoCircular() {
 		this.dato = null;
 		this.siguiente = null;
 	}
 
+	// Getters and Setters
 	public T getDato() {
 		return dato;
 	}
@@ -25,6 +35,5 @@ public class NodoCircular<T> {
 	public void setSiguiente(NodoCircular<T> siguiente) {
 		this.siguiente = siguiente;
 	}
-	
-	
+
 }

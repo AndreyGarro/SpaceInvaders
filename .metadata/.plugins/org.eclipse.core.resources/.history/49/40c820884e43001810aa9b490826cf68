@@ -1,0 +1,234 @@
+package com.andrews.estructuras;
+
+import com.andrews.sprites.SpriteForEnemy;
+
+public class ListaCircularDoble<T> extends Lista {
+
+
+	// Atributos de la Clase
+	private NodoDoble<T> primero;
+	private int tamaño;
+
+	public ListaCircularDoble() {
+		this.primero = null;
+	}
+
+	/**
+	 * Devuelve el tamaño de la lista.
+	 * 
+	 * @return int con el tamaño
+	 */
+	public int getTamaño() {
+		return this.tamaño;
+	}
+
+	/**
+	 * Revisa si la lista esta vacia o no.
+	 * 
+	 * @return True o False
+	 */
+	public boolean isEmpty() {
+		if (this.primero == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Elimina todos los datos de la lista.
+	 */
+	public void eliminarTodo() {
+		this.primero = null;
+		this.tamaño = 0;
+	}
+
+	/**
+	 * Agrega un nodo al inicio de la lista.
+	 * 
+	 * @param dato
+	 *            dato a agregar.
+	 */
+	public void agregarAlInicio(T dato) {
+		NodoDoble<T> nuevo = new NodoDoble<T>();
+		nuevo.setDato(dato);
+		if (this.primero == null) {
+			this.primero = nuevo;
+			this.tamaño++;
+		} else {
+			nuevo.setSiguiente(this.primero);
+			this.primero.setAnterior(nuevo);
+			this.primero = nuevo;
+			this.tamaño++;
+		}
+	}
+
+	/**
+	 * Agrega un nodo al final de la lista.
+	 * 
+	 * @param dato
+	 *            dato a agregar.
+	 */
+	public void agregarAlFinal(T dato) {
+		NodoDoble<T> nuevo = new NodoDoble<T>();
+		nuevo.setDato(dato);
+		if (this.primero == null) {
+			this.primero = nuevo;
+		} else {
+			NodoDoble<T> aux = primero;
+			while (aux.getSiguiente() != null) {
+				aux = aux.getSiguiente();
+			}
+			aux.setSiguiente(nuevo);
+			nuevo.setAnterior(aux);
+			this.tamaño++;
+		}
+	}
+
+	/**
+	 * Devuelve el dato que contiene un nodo.
+	 * 
+	 * @param pos
+	 *            posicion del nodo del cual se quiere el dato.
+	 * @return dato del nodo deseado.
+	 */
+	public T getDato(int pos) {
+		NodoDoble<T> aux = this.primero;
+		int cont = 0;
+		while (cont != pos) {
+			aux = aux.getSiguiente();
+			cont++;
+		}
+		return aux.getDato();
+	}
+
+	/**
+	 * Devuelve un nodo de la lista.
+	 * 
+	 * @param pos
+	 *            posicion del nodo que se desea.
+	 * @return el nodo deseado.
+	 */
+	public NodoDoble<T> getNodo(int pos) {
+		if (pos == 0) {
+			return this.primero;
+		} else {
+			NodoDoble<T> aux = primero;
+			for (int i = 0; i < pos - 1; i++) {
+				aux = aux.getSiguiente();
+			}
+			return aux;
+		}
+	}
+
+	/**
+	 * Inserta un nodo en la posicion deseada.
+	 * 
+	 * @param pos
+	 *            posicion a insertar el nodo.
+	 * @param dato
+	 *            dato que se desea guardar en el nodo.
+	 */
+	public void insertarPos(int pos, T dato) {
+		if (pos >= 0 && pos <= this.tamaño) {
+			NodoDoble<T> nuevo = new NodoDoble<T>();
+			nuevo.setDato(dato);
+			if (pos == 0) {
+				this.agregarAlInicio(dato);
+			} else {
+				if (pos == tamaño) {
+					this.agregarAlFinal(dato);
+				} else {
+					NodoDoble<T> aux = this.primero;
+					for (int i = 0; i < (pos - 1); i++) {
+						aux = aux.getSiguiente();
+					}
+					NodoDoble<T> siguiente = aux.getSiguiente();
+					aux.setSiguiente(nuevo);
+					nuevo.setSiguiente(siguiente);
+					nuevo.setAnterior(aux);
+					siguiente.setAnterior(nuevo);
+				}
+			}
+			this.tamaño++;
+		}
+	}
+
+	/**
+	 * Elmina el nodo de la posicion dada.
+	 * 
+	 * @param pos
+	 *            posicion que se desea eliminar.
+	 */
+	public void eliminarPos(int pos) {
+		if (pos >= 0 && pos < this.tamaño) {
+			if (pos == 0) {
+				this.primero = primero.getSiguiente();
+			} else {
+				NodoDoble<T> aux = primero;
+				for (int i = 0; i < pos - 1; i++) {
+					aux = aux.getSiguiente();
+				}
+				NodoDoble<T> siguiente = aux.getSiguiente();
+				this.mover(siguiente);
+				aux.setSiguiente(siguiente.getSiguiente());
+			}
+			this.tamaño--;
+		}
+	}
+
+	/**
+	 * Reacomoda las posiciones de los enemigos en la hilera.
+	 * 
+	 * @param nodo
+	 *            nodo eliminado.
+	 */
+	public void mover(NodoDoble<T> nodo) {
+		NodoDoble<T> aux = this.primero;
+		int cont = 0;
+		while (aux != nodo) {
+			((SpriteForEnemy) this.getDato(cont)).getBordes().x += 37;
+			aux = aux.getSiguiente();
+			cont++;
+		}
+		while (cont < this.tamaño) {
+			((SpriteForEnemy) this.getDato(cont)).getBordes().x -= 37;
+			cont++;
+		}
+	}
+
+	/**
+	 * Reemplaza un nodo por otro.
+	 * 
+	 * @param pos
+	 *            posicion a reemplazar.
+	 * @param reemplazo
+	 *            nodo que se desea insertar.
+	 */
+	public void reemplazar(int pos, NodoDoble<T> reemplazo) {
+		NodoDoble<T> pivote = this.primero;
+		for (int i = 0; i <= pos; i++) {
+			if (i == pos) {
+				if (pivote != this.primero && i != this.tamaño - 1) {
+					reemplazo.setAnterior(pivote.getAnterior());
+					reemplazo.setSiguiente(pivote.getSiguiente());
+					pivote.getAnterior().setSiguiente(reemplazo);
+					pivote.getSiguiente().setAnterior(reemplazo);
+					break;
+				} else if (pivote == this.primero) {
+					reemplazo.setSiguiente(pivote.getSiguiente());
+					pivote.getSiguiente().setAnterior(reemplazo);
+					primero = reemplazo;
+					break;
+				} else if (i == this.tamaño - 1) {
+					reemplazo.setAnterior(this.getNodo(this.tamaño - 1).getAnterior());
+					pivote.getAnterior().setSiguiente(reemplazo);
+					break;
+				}
+			}
+			pivote = pivote.getSiguiente();
+		}
+
+	}
+
+}

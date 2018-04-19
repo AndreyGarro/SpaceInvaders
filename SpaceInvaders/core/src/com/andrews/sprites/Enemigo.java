@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Se encarga de crear los enemigos
+ * 
  * @author andrey
  *
  */
 public class Enemigo extends SpriteForEnemy {
-	
-	//Atributos
+
+	// Atributos
 	private Animation animation;
 	private float tiempo;
 	private TextureRegion[] regionMovimiento;
@@ -23,24 +24,29 @@ public class Enemigo extends SpriteForEnemy {
 
 	/**
 	 * Inicializa los enemigos y crea el sprite con movimiento del enemigo
-	 * @param x coordenadas en el eje x
-	 * @param y coordenadas en el eje y
-	 * @param sprite sprite del enemigo que se desea crear
+	 * 
+	 * @param x
+	 *            coordenadas en el eje x
+	 * @param y
+	 *            coordenadas en el eje y
+	 * @param sprite
+	 *            sprite del enemigo que se desea crear
 	 */
 	public Enemigo(float x, float y, int resistencia, String sprite, String tipoEnemigo) {
 		super(x, y, sprite);
 		this.resistencia = resistencia;
 		this.tipoEnemigo = tipoEnemigo;
-		TextureRegion[][] temp = TextureRegion.split(super.texture, super.texture.getWidth()/2, super.texture.getHeight());
+		TextureRegion[][] temp = TextureRegion.split(super.texture, super.texture.getWidth() / 2,
+				super.texture.getHeight());
 		regionMovimiento = new TextureRegion[2];
-		for(int i = 0; i < 2; i ++) {
+		for (int i = 0; i < 2; i++) {
 			regionMovimiento[i] = temp[0][i];
 		}
 		animation = new Animation(0.5f, regionMovimiento);
 		tiempo = 0f;
 	}
-	//Fin del constructor
-	
+	// Fin del constructor
+
 	/**
 	 * Dibuja el enemigo en pantalla
 	 */
@@ -50,7 +56,7 @@ public class Enemigo extends SpriteForEnemy {
 		frameActual = (TextureRegion) animation.getKeyFrame(tiempo, true);
 		batch.draw(frameActual, super.bordes.x, super.bordes.y);
 	}
-	
+
 	/**
 	 * Realiza las acciones si el enemigo es disparado.
 	 */
@@ -58,18 +64,16 @@ public class Enemigo extends SpriteForEnemy {
 		if (this.resistencia == 1) {
 			this.shooted = true;
 			return true;
-		}
-		else{
-			System.out.println("holi");
-			this.resistencia --;
+		} else {
+			this.resistencia--;
 			return false;
 		}
 	}
-	
+
 	public int getResistencia() {
 		return this.resistencia;
 	}
-	
+
 	public String getTipoEnemigo() {
 		return this.tipoEnemigo;
 	}

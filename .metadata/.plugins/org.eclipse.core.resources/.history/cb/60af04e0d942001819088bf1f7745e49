@@ -1,0 +1,186 @@
+package com.andrews.estructuras;
+
+import com.andrews.sprites.SpriteForEnemy;
+
+/**
+ * Lista Circular
+ * @author andrey
+ *
+ * @param <T> Dato generico
+ */
+public class ListaCircular<T> extends Lista {
+	
+	//Atributos de la Clase
+	private NodoCircular<T> primero;
+	private NodoCircular<T> ultimo;
+	private int tamaño;
+	
+	public ListaCircular(){
+		this.primero = null;
+		this.ultimo = null;
+		this.tamaño = 0;
+	}
+	
+	/**
+	 * Revisa si la lista esta vacia o no.
+	 * @return True o False
+	 */
+	public boolean isEmpty() {
+		return this.primero == null;
+	}
+	
+	/**
+	 * Devuelve el tamaño de la lista.
+	 * @return int con el tamaño
+	 */
+	public int getTamaño() {
+		return this.tamaño;
+	}
+	
+	/**
+	 * Agrega un nodo al inicio de la lista.
+	 * @param dato dato a agregar.
+	 */
+	public void agregarAlInicio(T dato) {
+		NodoCircular<T> nuevo = new NodoCircular<T>();
+		if(this.isEmpty()) {
+			this.primero = nuevo;
+			this.ultimo = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		else {
+			nuevo.setSiguiente(primero);
+			primero = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		this.tamaño ++;
+	}
+	
+	/**
+	 * Agrega un nodo al final de la lista.
+	 * @param dato dato a agregar.
+	 */
+	public void agregarAlFinal(T dato) {
+		NodoCircular<T> nuevo = new NodoCircular<T>();
+		nuevo.setDato(dato);
+		if(this.isEmpty()) {
+			this.primero = nuevo;
+			this.ultimo = nuevo;
+			ultimo.setSiguiente(primero);
+		}
+		else {
+			ultimo.setSiguiente(nuevo);
+			nuevo.setSiguiente(primero);
+			ultimo = nuevo;
+		}
+		this.tamaño ++;
+	}
+	
+	/**
+	 * Devuelve el dato que contiene un nodo.
+	 * @param pos posicion del nodo del cual se quiere el dato.
+	 * @return dato del nodo deseado.
+	 */
+	public T getDato(int pos) {
+		NodoCircular<T> aux = primero;
+    	int cont = 0;
+    	while(cont != pos) {
+    		aux = aux.getSiguiente();
+    		cont ++;
+    	}
+    	return aux.getDato();
+	}
+	
+	/**
+	 *  Devuelve un nodo de la lista.
+	 * @param pos posicion del nodo que se desea.
+	 * @return el nodo deseado.
+	 */
+	public NodoCircular<T> getNodo(int pos){
+    	if(pos == 0) {
+    		return this.primero;
+   		}
+   		else {
+   			NodoCircular<T> aux = primero;
+   			for(int i = 0; i < pos-1; i++) {    				
+   				aux = aux.getSiguiente();
+    		}
+    		return aux;
+    	}
+	}
+
+    /**
+     * Elmina el nodo de la posicion dada.
+     * @param pos posicion que se desea eliminar.
+     */
+    public void eliminarPos(int pos) {
+    	if(pos>=0 && pos < this.tamaño) {
+    		if (pos == 0) {
+    			this.primero = primero.getSiguiente();
+    		}
+    		else {
+    			NodoCircular<T> aux = primero;
+    			for(int i = 0; i < pos-1; i++) {
+    				aux = aux.getSiguiente();
+    			}
+    			NodoCircular<T> siguiente = aux.getSiguiente();
+    			this.mover(siguiente, this);
+    			aux.setSiguiente(siguiente.getSiguiente());
+    		}
+    		this.tamaño --;
+    	}  	
+    }
+    
+    /**
+     * Reacomoda las posiciones de los enemigos en la hilera.
+     * @param nodo nodo eliminado.
+     */
+    public void mover(NodoCircular<T> nodo) {
+    	NodoCircular<T> aux = this.primero;
+    	int cont = 0;
+    	while(aux!=nodo) {
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x += 25;
+    		aux = aux.getSiguiente();
+    		cont ++;
+    	}
+    	while(cont < this.tamaño) {
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x -= 25;
+    		cont ++;
+    	}
+    }
+
+    /**
+     * Elimina todos los datos de la lista.
+     */
+    public void eliminarTodo() {
+    	this.primero = null;
+    	this.ultimo = null;
+    	tamaño = 0;
+    }
+    
+    /**
+     * 
+     * @param pos
+     * @param reemplazo
+     */
+    public void reemplazar(int pos, NodoCircular<T> reemplazo) {
+        NodoCircular<T> pivote = this.primero;
+    	if(pos == 0) {
+    		reemplazo.setSiguiente(this.primero.getSiguiente());
+    		primero = reemplazo;
+    	}
+    	else if(pos == this.tamaño-1) {
+    		for(int i = 0; i < pos; i++) {
+    			pivote = pivote.getSiguiente();
+    		}
+		   	pivote.setSiguiente(reemplazo);	
+    	}
+    	else {
+    		for(int i = 0; i < pos-1; i++) {
+    			pivote = pivote.getSiguiente();
+    		}
+    		reemplazo.setSiguiente(pivote.getSiguiente().getSiguiente());
+    		pivote.setSiguiente(reemplazo); 
+    	}
+    }
+}

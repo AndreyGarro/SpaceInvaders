@@ -42,6 +42,14 @@
 	<section name="org.eclipse.jdt.internal.ui.dialogs.OpenTypeSelectionDialog2">
 		<item value="true" key="ShowStatusLine"/>
 		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History/&gt;" key="History"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="391" key="DIALOG_X_ORIGIN"/>
+			<item value="44" key="DIALOG_Y_ORIGIN"/>
+		</section>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="528" key="DIALOG_WIDTH"/>
@@ -64,7 +72,7 @@
 		<item value="false" key="nodeprecated"/>
 		<item value="false" key="nonavbar"/>
 		<item value="" key="docletpath"/>
-		<item value="" key="javadoc_command_history"/>
+		<item value="C:\Program Files\Java\jdk-9.0.4\bin\javadoc.exe" key="javadoc_command_history"/>
 		<item value="1.6" key="source"/>
 		<item value="true" key="version"/>
 		<item value="" key="docletname"/>
@@ -77,11 +85,6 @@
 			<section name="SpaceInvaders-desktop">
 				<item value="C:\Users\diego\Desktop\Space Invaders\SpaceInvaders\desktop\javadoc.xml" key="antpath"/>
 				<item value="C:\Users\diego\Desktop\Space Invaders\SpaceInvaders\desktop\doc" key="destdir"/>
-				<item value="" key="href"/>
-			</section>
-			<section name="SpaceInvaders">
-				<item value="C:\Users\diego\Desktop\Space Invaders\SpaceInvaders\javadoc.xml" key="antpath"/>
-				<item value="C:\Users\diego\Desktop\Space Invaders\SpaceInvaders\doc" key="destdir"/>
 				<item value="" key="href"/>
 			</section>
 			<section name="SpaceInvaders-core">

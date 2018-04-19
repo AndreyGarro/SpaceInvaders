@@ -5,52 +5,54 @@ import com.badlogic.gdx.Input.Keys;
 
 /**
  * Será la nave principal la cuál controlará el jugador
+ * 
  * @author andrey
  *
  */
 public class NavePrincipal extends Sprite {
-	
-	//Atributos
+
+	// Atributos
 	public float speed = 200;
 	//
-	
+
 	/**
 	 * Inicializa el objeto de tipo NavePrincipal
-	 * @param x coordenada en el eje x
-	 * @param y coordenada en el eje y
-	 * @param sprite sprite de la nave que se quiere mostrar
+	 * 
+	 * @param x
+	 *            coordenada en el eje x
+	 * @param y
+	 *            coordenada en el eje y
+	 * @param sprite
+	 *            sprite de la nave que se quiere mostrar
 	 */
 	public NavePrincipal(float x, float y, String sprite) {
 		super(x, y, sprite);
 	}
-	//Fin del Constructor
-	
-	
+	// Fin del Constructor
+
 	/**
-	 * Habilita los movimientos de la nave, en este caso solo
-	 * se mueve en el eje x.
+	 * Habilita los movimientos de la nave, en este caso solo se mueve en el eje x.
 	 */
 	public void move() {
 		float delta = Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			if (colisionIzquierda()){
-			bordes.x -= speed*delta; 
+		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			if (colisionIzquierda()) {
+				bordes.x -= speed * delta;
 			}
-		}
-		else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			if(colisionDerecha()) {
-			bordes.x += speed*delta;
+		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			if (colisionDerecha()) {
+				bordes.x += speed * delta;
 			}
 		}
 	}
-	
+
 	/**
 	 * Detecta cuando la nave colisiona en el lateral derecho.
 	 */
 	public boolean colisionDerecha() {
 		return bordes.x + texture.getWidth() <= Gdx.graphics.getWidth();
 	}
-	
+
 	/**
 	 * Detecta cuando la nave colisiona en el lateral izquierdo.
 	 */

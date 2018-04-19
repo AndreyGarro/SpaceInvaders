@@ -3,8 +3,10 @@ package com.andrews.estructuras;
 
 /**
  * Nodo para las listas simples
+ * 
  * @author andrey
- * @param <T> Nodo generico que guarda cualquier tipo de dato
+ * @param <T>
+ *            Nodo generico que guarda cualquier tipo de dato
  */
 public class NodoSimple<T> {
 

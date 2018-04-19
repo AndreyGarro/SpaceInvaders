@@ -17,9 +17,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Crea la hilera de enemigos de clase A junto con todas sus funcionalidades.
+ */
 public class HileraA extends AbstractScreen {
 
-	//Atributos de la clase
+	// Atributos de la clase
 	private SpriteBatch batch;
 	private Texture background;
 	private NavePrincipal nave;
@@ -27,15 +30,21 @@ public class HileraA extends AbstractScreen {
 	private int revisaColision = 1;
 	private Disparo shot;
 	private Sound enemyDeadSound;
-	private Nivel1 nivel;
+	private Nivel nivel;
 	private ArrayList<AbstractScreen> listaHileras;
 	private BitmapFont puntajeActual;
 	private BitmapFont hileraActual;
 	private BitmapFont sigHilera;
 	private Texture cuadro;
-	
+
+	/**
+	 * 
+	 * @param main
+	 * @param listaHileras
+	 * @param nivel
+	 */
 	@SuppressWarnings("unchecked")
-	public HileraA(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel1 nivel) {
+	public HileraA(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel nivel) {
 		super(main);
 		this.tipo = "HileraA";
 		this.listaHileras = listaHileras;
@@ -46,17 +55,17 @@ public class HileraA extends AbstractScreen {
 		hileraActual = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
 				Gdx.files.internal("fonts/mercutio_basic_0.png"), false);
 	}
-	
+
 	/**
-	 * Se encarga de inicializar el fondo y la nave principal.
-	 * Tambien crea el SpriteBatch que se encarga de agrupar los sprites y/o
-	 * dibujos que se quieran mostrar.
+	 * Se encarga de inicializar el fondo y la nave principal. Tambien crea el
+	 * SpriteBatch que se encarga de agrupar los sprites y/o dibujos que se quieran
+	 * mostrar.
 	 */
 	@Override
 	public void show() {
-		batch = new SpriteBatch(); //agrupacion de sprites u objetos que se vayan a dibujar
+		batch = new SpriteBatch(); // agrupacion de sprites u objetos que se vayan a dibujar
 		background = new Texture(Gdx.files.internal("background.jpg"));
-		nave = new NavePrincipal((Gdx.graphics.getWidth()/2)-25, 10, "ship.png");
+		nave = new NavePrincipal((Gdx.graphics.getWidth() / 2) - 25, 10, "ship.png");
 		shot = new Disparo(500, 900, "laser.png");
 		cuadro = new Texture(Gdx.files.internal("cuadro.png"));
 		sigHilera = new BitmapFont(Gdx.files.internal("fonts/mercutio_basic.fnt"),
@@ -64,17 +73,19 @@ public class HileraA extends AbstractScreen {
 		this.nivel.valorEliminar = (int) (Math.random() * this.listaHileras.size());
 		enemyDeadSound = Gdx.audio.newSound(Gdx.files.internal("enemyKilled.mp3"));
 	}
-	
+
 	/**
 	 * Limpia el buffer de dibujo e inicializa los movimientos de la nave principal,
-	 * tambien inicia el batch donde se dibujarán los distintos elementos y realizarán
-	 * sus acciones correspondientes, al final termina el batch
-	 * @param delta recibe la cantidad de fotogramas por segundo
+	 * tambien inicia el batch donde se dibujarán los distintos elementos y
+	 * realizarán sus acciones correspondientes, al final termina el batch
+	 * 
+	 * @param delta
+	 *            recibe la cantidad de fotogramas por segundo
 	 */
 	@Override
 	public void render(float delta) {
-		//Limpia el buffer de dibujo
-		Gdx.gl.glClearColor(1,1,1,1);
+		// Limpia el buffer de dibujo
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//
 		nave.move();
@@ -86,11 +97,11 @@ public class HileraA extends AbstractScreen {
 		sigHilera.draw(batch, "Sig. Hilera: " + this.listaHileras.get(nivel.valorEliminar).getTipo(), 530, 580);
 		nave.draw(batch);
 		shot.draw(batch);
-		shot.disparar(shot, nave);
+		shot.disparar(nave);
 		shot.move();
 		shot.disparado();
-		if(!listaEnemigos.isEmpty()) {
-			for(int i = 0; i < listaEnemigos.getTamaño(); i++) {
+		if (!listaEnemigos.isEmpty()) {
+			for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 				listaEnemigos.getDato(i).draw(batch);
 				try {
 					revisaVacia();
@@ -103,68 +114,75 @@ public class HileraA extends AbstractScreen {
 		}
 		batch.end();
 	}
-	
 
 	/**
 	 * Realiza el movimiento de los lados y hacia abajo de los enemigos.
 	 */
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
-			if(!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
-			}
-			else if(listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				for (int x = listaEnemigos.getTamaño()-1; x >= 0;x --) {
-					listaEnemigos.getDato(x).getBordes().y -= 40;	
+			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
-				revisaColision=2;
+				revisaColision = 2;
 			}
-			if (!listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
 				listaEnemigos.getDato(i).getBordes().x += 0.7f;
-			}
-			else if(listaEnemigos.getDato(listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
-				for(int x = 0; x < listaEnemigos.getTamaño(); x ++) {
+			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
+				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
 					listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
 				revisaColision = 1;
 			}
-			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+			if (listaEnemigos.getDato(i).getBordes().y <= 70) {
 				main.fondo = new MainMenu(main);
 				main.setScreen(main.fondo);
 			}
-		}		
+		}
 	}
-	
+
+	/**
+	 * Revisa cuando la lista y ArrayList de enemigos está vacía para hacer la
+	 * transicion de nivel.
+	 */
 	private void revisaVacia() {
 		if (this.listaEnemigos.isEmpty()) {
 			this.dispose();
-			if(this.listaHileras.isEmpty()) {
+			if (this.listaHileras.isEmpty()) {
 				System.out.println("lista vacia");
 			}
 			this.dispose();
 			main.setScreen(listaHileras.get(nivel.valorEliminar));
 		}
 	}
-	
-	private void revisaImpacto(int i) throws Throwable {
-		if(shot.getBordes().overlaps(listaEnemigos.getDato(i).getBordes())) {
+
+	/**
+	 * Revisa si un enemigo ha sido impactado por el disparo si lo fue lo elimina de
+	 * la lista.
+	 * 
+	 * @param pos
+	 *            posicion a revisar
+	 */
+	private void revisaImpacto(int pos) throws Throwable {
+		if (shot.getBordes().overlaps(listaEnemigos.getDato(pos).getBordes())) {
 			shot.getTexture().dispose();
 			shot = new Disparo(500, 900, "laser.png");
-			if(listaEnemigos.getDato(i).isShooted()) {
-				if(listaEnemigos.getDato(i).getTipoEnemigo().equals("boss") && listaEnemigos.getDato(i).getResistencia() == 1) {
+			if (listaEnemigos.getDato(pos).isShooted()) {
+				if (listaEnemigos.getDato(pos).getTipoEnemigo().equals("boss")
+						&& listaEnemigos.getDato(pos).getResistencia() == 1) {
 					nivel.puntaje += 50;
 					listaEnemigos.eliminarTodo();
 					revisaVacia();
 					return;
 				}
-				if (listaEnemigos.getDato(i).getResistencia() == 1) {
+				if (listaEnemigos.getDato(pos).getResistencia() == 1) {
 					enemyDeadSound.play();
 					nivel.puntaje += 10;
-					listaEnemigos.eliminarPos(i, listaEnemigos);
+					listaEnemigos.eliminarPos(pos, listaEnemigos);
 				}
 			}
 		}
 	}
 }
-
-	

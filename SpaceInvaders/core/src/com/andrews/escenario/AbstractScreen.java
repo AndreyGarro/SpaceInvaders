@@ -3,22 +3,29 @@ package com.andrews.escenario;
 import com.andrews.spaceinvaders.GameMain;
 import com.badlogic.gdx.Screen;
 
+/**
+ * Permite crear las pantallas y la ejecucion de todos los elementos graficos
+ * del juego.
+ * 
+ * @author andrey
+ *
+ */
 public abstract class AbstractScreen implements Screen {
 
 	protected GameMain main;
 	protected String tipo;
-	protected Nivel1 nivel;
-	
+	protected Nivel nivel;
+
+	// Constructor
 	public AbstractScreen(GameMain main) {
 		this.main = main;
 	}
-	
 
 	@Override
 	public void render(float delta) {
-		
+
 	}
-	
+
 	@Override
 	public void show() {
 
@@ -40,7 +47,7 @@ public abstract class AbstractScreen implements Screen {
 	}
 
 	@Override
-	public void hide() { 
+	public void hide() {
 
 	}
 
@@ -48,10 +55,9 @@ public abstract class AbstractScreen implements Screen {
 	public void dispose() {
 
 	}
-	
+
 	public String getTipo() {
 		return this.tipo;
 	}
-
 
 }

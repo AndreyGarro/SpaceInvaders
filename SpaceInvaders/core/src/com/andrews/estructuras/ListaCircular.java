@@ -1,9 +1,16 @@
 package com.andrews.estructuras;
 
-import com.andrews.sprites.Enemigo;
+import com.andrews.sprites.SpriteForEnemy;
 
+/**
+ * Lista Circular
+ * @author andrey
+ *
+ * @param <T> Dato generico
+ */
 public class ListaCircular<T> extends Lista {
 	
+	//Atributos de la Clase
 	private NodoCircular<T> primero;
 	private NodoCircular<T> ultimo;
 	private int tamaño;
@@ -14,14 +21,26 @@ public class ListaCircular<T> extends Lista {
 		this.tamaño = 0;
 	}
 	
+	/**
+	 * Revisa si la lista esta vacia o no.
+	 * @return True o False
+	 */
 	public boolean isEmpty() {
 		return this.primero == null;
 	}
 	
+	/**
+	 * Devuelve el tamaño de la lista.
+	 * @return int con el tamaño
+	 */
 	public int getTamaño() {
 		return this.tamaño;
 	}
 	
+	/**
+	 * Agrega un nodo al inicio de la lista.
+	 * @param dato dato a agregar.
+	 */
 	public void agregarAlInicio(T dato) {
 		NodoCircular<T> nuevo = new NodoCircular<T>();
 		if(this.isEmpty()) {
@@ -37,6 +56,10 @@ public class ListaCircular<T> extends Lista {
 		this.tamaño ++;
 	}
 	
+	/**
+	 * Agrega un nodo al final de la lista.
+	 * @param dato dato a agregar.
+	 */
 	public void agregarAlFinal(T dato) {
 		NodoCircular<T> nuevo = new NodoCircular<T>();
 		nuevo.setDato(dato);
@@ -53,6 +76,11 @@ public class ListaCircular<T> extends Lista {
 		this.tamaño ++;
 	}
 	
+	/**
+	 * Devuelve el dato que contiene un nodo.
+	 * @param pos posicion del nodo del cual se quiere el dato.
+	 * @return dato del nodo deseado.
+	 */
 	public T getDato(int pos) {
 		NodoCircular<T> aux = primero;
     	int cont = 0;
@@ -63,6 +91,11 @@ public class ListaCircular<T> extends Lista {
     	return aux.getDato();
 	}
 	
+	/**
+	 *  Devuelve un nodo de la lista.
+	 * @param pos posicion del nodo que se desea.
+	 * @return el nodo deseado.
+	 */
 	public NodoCircular<T> getNodo(int pos){
     	if(pos == 0) {
     		return this.primero;
@@ -76,8 +109,11 @@ public class ListaCircular<T> extends Lista {
     	}
 	}
 
-    
-    public void eliminarPos(int pos, ListaCircular<Enemigo> lista) {
+    /**
+     * Elmina el nodo de la posicion dada.
+     * @param pos posicion que se desea eliminar.
+     */
+    public void eliminarPos(int pos) {
     	if(pos>=0 && pos < this.tamaño) {
     		if (pos == 0) {
     			this.primero = primero.getSiguiente();
@@ -88,34 +124,48 @@ public class ListaCircular<T> extends Lista {
     				aux = aux.getSiguiente();
     			}
     			NodoCircular<T> siguiente = aux.getSiguiente();
-    			this.mover(siguiente, lista);
+    			this.mover(siguiente);
     			aux.setSiguiente(siguiente.getSiguiente());
     		}
     		this.tamaño --;
     	}  	
     }
     
-    
-    public void mover(NodoCircular<T> nodo, ListaCircular<Enemigo> lista) {
+    /**
+     * Reacomoda las posiciones de los enemigos en la hilera.
+     * @param nodo nodo eliminado.
+     */
+    public void mover(NodoCircular<T> nodo) {
     	NodoCircular<T> aux = this.primero;
     	int cont = 0;
     	while(aux!=nodo) {
-    		lista.getDato(cont).getBordes().x += 25;
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x += 37;
     		aux = aux.getSiguiente();
     		cont ++;
     	}
-    	while(cont < lista.tamaño) {
-    		lista.getDato(cont).getBordes().x -= 25;
+    	while(cont < this.tamaño) {
+    		((SpriteForEnemy) this.getDato(cont)).getBordes().x -= 37;
     		cont ++;
     	}
     }
 
+    /**
+     * Elimina todos los datos de la lista.
+     */
     public void eliminarTodo() {
     	this.primero = null;
     	this.ultimo = null;
     	tamaño = 0;
     }
     
+	/**
+	 * Reemplaza un nodo por otro.
+	 * 
+	 * @param pos
+	 *            posicion a reemplazar.
+	 * @param reemplazo
+	 *            nodo que se desea insertar.
+	 */
     public void reemplazar(int pos, NodoCircular<T> reemplazo) {
         NodoCircular<T> pivote = this.primero;
     	if(pos == 0) {

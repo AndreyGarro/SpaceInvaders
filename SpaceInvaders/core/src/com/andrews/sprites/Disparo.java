@@ -6,44 +6,67 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Disparo extends Sprite{
-	
+/**
+ * Disparo de la nave principal del jugador.
+ * 
+ * @author andrey
+ *
+ */
+public class Disparo extends Sprite {
+
+	// Atributos de la Clase.
 	private boolean disparado = false;
 	private Sound shootSound;
 
 	public Disparo(float x, float y, String sprite) {
 		super(x, y, sprite);
 	}
-	
+
+	/**
+	 * Realiza el movimiento en vertical de la bala.
+	 */
 	public void move() {
 		this.bordes.y += 7;
 	}
-	
+
+	/**
+	 * Carga el sonido de la bala.
+	 */
 	public void cargarSonido() {
 		shootSound = Gdx.audio.newSound(Gdx.files.internal("shipShoot.mp3"));
-		shootSound.setVolume(0,1f);
+		shootSound.setVolume(0, 1f);
 		shootSound.play();
 	}
-	
-	public void disparar(Disparo shot, NavePrincipal nave) {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if(!this.disparado){
+
+	/**
+	 * Hace que la bala se situe en la posicion de la nave.
+	 * 
+	 * @param nave
+	 *            nave de donde se quiere que salga el disparo.
+	 */
+	public void disparar(NavePrincipal nave) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			if (!this.disparado) {
 				cargarSonido();
 				this.disparado = true;
-				shot.bordes.x = nave.bordes.x + 27;
-				shot.bordes.y = nave.bordes.y + 57;
-			}	
-		}
-	}
-
-	public void disparado() {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if (this.bordes.y >= 550) {
-				this.disparado = false;	
+				this.bordes.x = nave.bordes.x + 27;
+				this.bordes.y = nave.bordes.y + 57;
 			}
 		}
 	}
-	
+
+	/**
+	 * Realiza una validacion de si la bala aun esta en el aire, esto impide el uso
+	 * reiterado del disparo.
+	 */
+	public void disparado() {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			if (this.bordes.y >= 550) {
+				this.disparado = false;
+			}
+		}
+	}
+
 	public Rectangle getBordes() {
 		return this.bordes;
 	}

@@ -15,6 +15,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * 
+ * Crea la hilera de enemigos de clase B junto con todas sus funcionalidades.
+ *
+ * @author andrey
+ */
 public class HileraB extends AbstractScreen {
 
 	// Atributos de la clase
@@ -28,14 +34,14 @@ public class HileraB extends AbstractScreen {
 	private Sound enemyDeadSound;
 	private ArrayList<Integer> eliminados = new ArrayList<Integer>();
 	private ArrayList<AbstractScreen> listaHileras;
-	private Nivel1 nivel;
+	private Nivel nivel;
 	private BitmapFont puntajeActual;
 	private BitmapFont hileraActual;
 	private BitmapFont sigHilera;
 	private Texture cuadro;
 
 	@SuppressWarnings("unchecked")
-	public HileraB(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel1 nivel) {
+	public HileraB(GameMain main, ArrayList<AbstractScreen> listaHileras, Nivel nivel) {
 		super(main);
 		this.tipo = "HileraB";
 		this.listaHileras = listaHileras;
@@ -71,7 +77,8 @@ public class HileraB extends AbstractScreen {
 	 * tambien inicia el batch donde se dibujarán los distintos elementos y
 	 * realizarán sus acciones correspondientes, al final termina el batch
 	 * 
-	 * @param delta recibe la cantidad de fotogramas por segundo          
+	 * @param delta
+	 *            recibe la cantidad de fotogramas por segundo
 	 */
 	@Override
 	public synchronized void render(float delta) {
@@ -79,7 +86,7 @@ public class HileraB extends AbstractScreen {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//
-		tempo ++;
+		tempo++;
 		nave.move();
 		batch.begin();
 		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -89,7 +96,7 @@ public class HileraB extends AbstractScreen {
 		sigHilera.draw(batch, "Sig. Hilera: " + this.listaHileras.get(nivel.valorEliminar).getTipo(), 530, 580);
 		nave.draw(batch);
 		shot.draw(batch);
-		shot.disparar(shot, nave);
+		shot.disparar(nave);
 		shot.move();
 		shot.disparado();
 		if (!this.listaEnemigos.isEmpty()) {
@@ -97,7 +104,7 @@ public class HileraB extends AbstractScreen {
 				this.listaEnemigos.getDato(i).draw(batch);
 				try {
 					revisaImpacto(i);
-					if(tempo == 150) {
+					if (tempo == 150) {
 						cambioAleatorio();
 						tempo = 0;
 					}
@@ -119,33 +126,40 @@ public class HileraB extends AbstractScreen {
 	 */
 	private void movimientoEnemigos() {
 		for (int i = 0; i < this.listaEnemigos.getTamaño(); i++) {
-			if(!this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+			if (!this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				this.listaEnemigos.getDato(i).getBordes().x -= 0.7f;
-			}
-			else if(this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				for (int x = this.listaEnemigos.getTamaño()-1; x >= 0;x --) {
-					this.listaEnemigos.getDato(x).getBordes().y -= 40;	
+			} else if (this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = this.listaEnemigos.getTamaño() - 1; x >= 0; x--) {
+					this.listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
-				revisaColision=2;
+				revisaColision = 2;
 			}
-			if (!this.listaEnemigos.getDato(this.listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
+			if (!this.listaEnemigos.getDato(this.listaEnemigos.getTamaño() - 1).colisionDerecha()
+					&& revisaColision == 2) {
 				this.listaEnemigos.getDato(i).getBordes().x += 0.7f;
-			}
-			else if(this.listaEnemigos.getDato(this.listaEnemigos.getTamaño()-1).colisionDerecha() && revisaColision == 2) {
-				for(int x = 0; x < this.listaEnemigos.getTamaño(); x ++) {
+			} else if (this.listaEnemigos.getDato(this.listaEnemigos.getTamaño() - 1).colisionDerecha()
+					&& revisaColision == 2) {
+				for (int x = 0; x < this.listaEnemigos.getTamaño(); x++) {
 					this.listaEnemigos.getDato(x).getBordes().y -= 40;
 				}
 				revisaColision = 1;
 			}
-			if(listaEnemigos.getDato(i).getBordes().y <= 70) {
+			if (listaEnemigos.getDato(i).getBordes().y <= 70) {
 				main.fondo = new MainMenu(main);
 				main.setScreen(main.fondo);
 			}
-			
-		}		
+
+		}
 	}
-	
-	private void revisaImpacto(int i){
+
+	/**
+	 * Revisa si un enemigo ha sido impactado por el disparo si lo fue lo elimina de
+	 * la lista.
+	 * 
+	 * @param pos
+	 *            posicion a revisar
+	 */
+	private void revisaImpacto(int i) {
 		if (shot.getBordes().overlaps(listaEnemigos.getDato(i).getBordes())) {
 			shot.getTexture().dispose();
 			shot = new Disparo(500, 900, "laser.png");
@@ -155,8 +169,7 @@ public class HileraB extends AbstractScreen {
 					nivel.puntaje += 50;
 					listaEnemigos.eliminarTodo();
 					revisaVacia();
-				}
-				else if (listaEnemigos.getDato(i).getResistencia() == 1) {
+				} else if (listaEnemigos.getDato(i).getResistencia() == 1) {
 					enemyDeadSound.play();
 					nivel.puntaje += 10;
 					this.eliminados.add(i);
@@ -164,11 +177,15 @@ public class HileraB extends AbstractScreen {
 			}
 		}
 	}
-	
+
+	/**
+	 * Revisa cuando la lista y ArrayList de enemigos está vacía para hacer la
+	 * transicion de nivel.
+	 */
 	private void revisaVacia() {
 		if (this.listaEnemigos.isEmpty()) {
 			this.dispose();
-			if(this.listaHileras.isEmpty()) {
+			if (this.listaHileras.isEmpty()) {
 				System.out.println("lista vacia");
 			}
 			this.dispose();
@@ -176,27 +193,31 @@ public class HileraB extends AbstractScreen {
 		}
 	}
 
+	/**
+	 * Realiza el cambio aleatorio del jefe a traves de la hilera.
+	 */
 	public void cambioAleatorio() {
 		int posJefe = 0;
-		for(int i=0; i < this.listaEnemigos.getTamaño(); i++) {
-			if(this.listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")) {
+		for (int i = 0; i < this.listaEnemigos.getTamaño(); i++) {
+			if (this.listaEnemigos.getDato(i).getTipoEnemigo().equals("boss")) {
 				posJefe = i;
 				break;
 			}
 		}
-		int random = (int) (Math.random() * this.listaEnemigos.getTamaño() - 1);		
+		int random = (int) (Math.random() * this.listaEnemigos.getTamaño() - 1);
 		NodoDoble<Enemigo> nuevoEnemigo = new NodoDoble<Enemigo>();
 		NodoDoble<Enemigo> nuevoJefe = new NodoDoble<Enemigo>();
-		if(!(posJefe == random)) {
-			Enemigo enemy = new Enemigo(this.listaEnemigos.getDato(posJefe).getBordes().x, this.listaEnemigos.getDato(posJefe).getBordes().y, 1, 
-					"enemySprite.png", "enemy");
+		if (!(posJefe == random)) {
+			Enemigo enemy = new Enemigo(this.listaEnemigos.getDato(posJefe).getBordes().x,
+					this.listaEnemigos.getDato(posJefe).getBordes().y, 1, "enemySprite.png", "enemy");
 			System.out.println(this.listaEnemigos.getDato(posJefe).getTipoEnemigo());
-			Enemigo boss = new Enemigo(this.listaEnemigos.getDato(random).getBordes().x, this.listaEnemigos.getDato(random).getBordes().y, 
+			Enemigo boss = new Enemigo(this.listaEnemigos.getDato(random).getBordes().x,
+					this.listaEnemigos.getDato(random).getBordes().y,
 					this.listaEnemigos.getDato(posJefe).getResistencia(), "boss1.png", "boss");
 			nuevoJefe.setDato(boss);
 			nuevoEnemigo.setDato(enemy);
 			listaEnemigos.reemplazar(random, nuevoJefe);
 			listaEnemigos.reemplazar(posJefe, nuevoEnemigo);
 		}
-	}	
+	}
 }

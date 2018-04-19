@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.ScreenAdapter"/>
 <fullyQualifiedTypeName name="java.nio.channels.ScatteringByteChannel"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.GL20"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Animation"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureRegion"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture"/>
@@ -39,7 +38,13 @@
 <fullyQualifiedTypeName name="com.badlogic.gdx.Screen"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.ListaEnemigoFactory"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.ListaDoble"/>
-<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.NodoDoble"/>
 <fullyQualifiedTypeName name="com.andrews.escenario.Nivel3"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.Lista"/>
+<fullyQualifiedTypeName name="com.andrews.escenario.AbstractScreen"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.BitmapFont"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
 </qualifiedTypeNameHistroy>

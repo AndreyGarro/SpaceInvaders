@@ -2,80 +2,91 @@ package com.andrews.estructuras;
 
 import com.andrews.sprites.Enemigo;
 
-public class ListaEnemigoFactory{
-
+/**
+ * Factoria de las hileras de enemigos.
+ * 
+ * @author andrey
+ *
+ */
+public class ListaEnemigoFactory {
 
 	private ListaEnemigoFactory() {
 	};
 
-	public static Lista getLista(String hilera){
+	/**
+	 * Devuelve la lista con la hilera deseada.
+	 * 
+	 * @param hilera
+	 *            el tipo de hilera necesitado.
+	 * @return la hilera de enemigos.
+	 */
+	public static Lista getLista(String hilera) {
 		if (hilera.equals("basica")) {
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 475;
 			ListaSimple<Enemigo> listaEnemigosBasica = new ListaSimple<Enemigo>();
-			while(cont < 10) {
+			while (cont < 10) {
 				listaEnemigosBasica.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
 				xPos += 75;
-				cont ++;
+				cont++;
 			}
 			return listaEnemigosBasica;
-		
-		}else if(hilera.equals("claseA")) {
+
+		} else if (hilera.equals("claseA")) {
 			ListaSimple<Enemigo> listaEnemigosClaseA = new ListaSimple<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 475;
-			int random = (int) (Math.random()*10);
-			while(cont < 10) {
-				if(cont == random) {
-					listaEnemigosClaseA.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 1), "boss2.png", "boss"));
-					cont ++;
+			int random = (int) (Math.random() * 10);
+			while (cont < 10) {
+				if (cont == random) {
+					listaEnemigosClaseA.agregarAlFinal(
+							new Enemigo(xPos, yPos, (int) (Math.random() * 4 + 1), "boss2.png", "boss"));
+					cont++;
 					xPos += 75;
-				}
-				else {
+				} else {
 					listaEnemigosClaseA.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
-					cont ++;
+					cont++;
 					xPos += 75;
 				}
 			}
-			return listaEnemigosClaseA;		
-		}else if(hilera.equals("claseB")) {
+			return listaEnemigosClaseA;
+		} else if (hilera.equals("claseB")) {
 			ListaDoble<Enemigo> listaEnemigosClaseB = new ListaDoble<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 475;
-			int random = (int) (Math.random()*10);
-			while(cont < 10) {
-				if(cont == random) {
-					int x = (int) (Math.random()*4 + 1);
+			int random = (int) (Math.random() * 10);
+			while (cont < 10) {
+				if (cont == random) {
+					int x = (int) (Math.random() * 4 + 1);
 					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, x, "boss2.png", "boss"));
-					cont ++;
+					cont++;
 					xPos += 75;
-				}
-				else {
+				} else {
 					listaEnemigosClaseB.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
-					cont ++;
+					cont++;
 					xPos += 75;
 				}
 			}
 			return listaEnemigosClaseB;
-		}else if(hilera.equals("claseC")) {
+		} else if (hilera.equals("claseC")) {
 			ListaCircular<Enemigo> listaEnemigosClaseC = new ListaCircular<Enemigo>();
 			int cont = 0;
 			int xPos = 40;
 			int yPos = 475;
-			int random = (int) (Math.random()*10);
-			while(cont < 75) {
-				if(cont == random) {
-					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, (int) (Math.random()*4 + 2), "boss2.png", "boss"));
-					cont ++;
+			int random = (int) (Math.random() * 10);
+			while (cont < 10) {
+				if (cont == random) {
+					listaEnemigosClaseC.agregarAlFinal(
+							new Enemigo(xPos, yPos, (int) (Math.random() * 4 + 2), "boss2.png", "boss"));
+					cont++;
 					xPos += 75;
-				}
-				else {
+				} else {
 					listaEnemigosClaseC.agregarAlFinal(new Enemigo(xPos, yPos, 1, "enemySprite.png", "enemy"));
-					cont ++;
-					xPos += 50;
+					cont++;
+					xPos += 75;
 				}
 			}
 			return listaEnemigosClaseC;

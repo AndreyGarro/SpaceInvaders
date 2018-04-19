@@ -1,5 +1,10 @@
 package com.andrews.estructuras;
 
+/**
+ * Clase para hacer de todas las listas enlazadas un solo tipo.
+ * @author andrey
+ *
+ */
 public abstract class Lista {
-
+	
 }
