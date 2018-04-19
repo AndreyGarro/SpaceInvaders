@@ -45,7 +45,7 @@ public class Nivel extends AbstractScreen {
 	public void render(float delta) {
 		ArrayList<String> hileras = new ArrayList<String>();
 
-		main.fondo = listaHileras.get(0);
+		main.fondo = listaHileras.get(6);
 		main.setScreen(main.fondo);
 
 	}

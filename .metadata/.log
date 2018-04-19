@@ -10640,3 +10640,19 @@ java.lang.IndexOutOfBoundsException: Index: 1, Size: 0
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:653)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:590)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1499)
+
+!ENTRY org.eclipse.egit.ui 4 0 2018-04-18 19:29:52.021
+!MESSAGE El proceso no tiene acceso al archivo porque otro proceso tiene bloqueada una parte del archivo
+!STACK 0
+java.io.IOException: El proceso no tiene acceso al archivo porque otro proceso tiene bloqueada una parte del archivo
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(Unknown Source)
+	at org.eclipse.jgit.util.IO.readFully(IO.java:303)
+	at org.eclipse.jgit.internal.storage.file.ObjectDirectoryInserter.insert(ObjectDirectoryInserter.java:139)
+	at org.eclipse.jgit.internal.storage.file.ObjectDirectoryInserter.insert(ObjectDirectoryInserter.java:120)
+	at org.eclipse.jgit.api.AddCommand.call(AddCommand.java:234)
+	at org.eclipse.egit.ui.internal.staging.StagingView$53.run(StagingView.java:3291)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+
+!ENTRY com.yattasolutions.diagrams.editor 4 0 2018-04-18 20:44:26.887
+!MESSAGE Could not apply OCL constraint-validation results to editors.

@@ -1,7 +1,7 @@
 package com.andrews.estructuras;
 
 /**
- * Nodo para las listas doble
+ * Nodo para las listas dobles
  * 
  * @author andrey
  * @param <T>
