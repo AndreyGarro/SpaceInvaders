@@ -1,0 +1,58 @@
+package com.andrews.escenario;
+
+import java.net.*;
+import java.io.*;
+
+public class Server implements Runnable {
+	private static Server instance;
+	private ServerSocket server;
+	private Socket socket;
+	private int puerto = 9000;
+	private ObjectOutputStream salida;
+	private ObjectInputStream entrada;
+	private static boolean exist = false;
+	private String recibido;
+
+	private Server() {
+		new Thread(this).start();
+	}
+
+	public static Server getInstance() {
+		if (instance == null) {
+			exist = true;
+			instance = new Server();
+		}
+		return instance;
+	}
+	
+	public static boolean getExist() {
+		return exist;
+	}
+
+
+	public void run() {
+		while (true) {
+			try {
+				server = new ServerSocket(puerto);
+				socket = new Socket();
+				System.out.println("Esperando...");
+				socket = server.accept();
+				System.out.println("Conectado");
+				entrada = new ObjectInputStream(socket.getInputStream());
+				String mensaje = (String) entrada.readObject();
+				recibido = mensaje;
+				System.out.println(recibido);
+				salida = new ObjectOutputStream(socket.getOutputStream());
+				salida.writeObject("hola x2");
+				server.close();
+				socket.close();
+			} catch (Exception e) {
+
+			}
+		}
+	}
+	
+	public String getRecibido() {
+		return this.recibido;
+	}
+}

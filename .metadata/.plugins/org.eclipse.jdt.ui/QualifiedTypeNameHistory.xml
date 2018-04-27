@@ -28,7 +28,6 @@
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Game"/>
 <fullyQualifiedTypeName name="com.andrews.escenario.EscenarioBatalla"/>
-<fullyQualifiedTypeName name="com.andrews.sprites.Enemigo"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.NodoSimple"/>
 <fullyQualifiedTypeName name="com.andrews.spaceinvaders.ListaEnemigoFactory"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.ListaSimple"/>
@@ -40,11 +39,12 @@
 <fullyQualifiedTypeName name="com.andrews.estructuras.ListaDoble"/>
 <fullyQualifiedTypeName name="com.andrews.estructuras.NodoDoble"/>
 <fullyQualifiedTypeName name="com.andrews.escenario.Nivel3"/>
-<fullyQualifiedTypeName name="com.andrews.estructuras.Lista"/>
 <fullyQualifiedTypeName name="com.andrews.escenario.AbstractScreen"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.BitmapFont"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
 <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
+<fullyQualifiedTypeName name="com.andrews.estructuras.Lista"/>
+<fullyQualifiedTypeName name="com.andrews.sprites.Enemigo"/>
 </qualifiedTypeNameHistroy>

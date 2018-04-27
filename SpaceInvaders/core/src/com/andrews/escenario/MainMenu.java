@@ -26,6 +26,7 @@ public class MainMenu extends AbstractScreen {
 	private boolean musicOn = false;
 	private int tempo = 0;
 	private int validacion = 0;
+	private Server server;
 
 	public MainMenu(GameMain main) {
 		super(main);
@@ -71,6 +72,9 @@ public class MainMenu extends AbstractScreen {
 				tempo = 0;
 				validacion = 0;
 			}
+		}
+		if(Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			server = Server.getInstance(); 
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			main.fondo = new Nivel(main); // Aqui llama la hilera que necesita

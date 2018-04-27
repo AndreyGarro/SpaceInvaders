@@ -1,0 +1,32 @@
+import java.net.*;
+import java.io.*;
+
+public class Server implements Runnable {
+    private ServerSocket server;
+    private Socket socket;
+    private int puerto = 9000;
+    private ObjectOutputStream salida;
+    private ObjectInputStream entrada;
+
+    public void run() {
+        while (true) {
+            try {
+                server = new ServerSocket(puerto);
+                socket = new Socket();
+                System.out.println("Esperando...");
+                socket = server.accept();
+                System.out.println("Conectado");
+                entrada = new ObjectInputStream(socket.getInputStream());
+                String mensaje = (String) entrada.readObject();
+                System.out.println(mensaje);
+                salida = new ObjectOutputStream(socket.getOutputStream());
+                salida.writeObject("hola x2");
+                server.close();
+                socket.close();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+}
+

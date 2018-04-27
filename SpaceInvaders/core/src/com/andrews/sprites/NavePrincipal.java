@@ -1,5 +1,6 @@
 package com.andrews.sprites;
 
+import com.andrews.escenario.Server;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
@@ -12,7 +13,8 @@ import com.badlogic.gdx.Input.Keys;
 public class NavePrincipal extends Sprite {
 
 	// Atributos
-	public float speed = 200;
+	private float speed = 200;
+	private Server server;
 	//
 
 	/**
@@ -27,6 +29,9 @@ public class NavePrincipal extends Sprite {
 	 */
 	public NavePrincipal(float x, float y, String sprite) {
 		super(x, y, sprite);
+		if (Server.getExist()) {
+			server = Server.getInstance();
+		}
 	}
 	// Fin del Constructor
 
@@ -35,13 +40,28 @@ public class NavePrincipal extends Sprite {
 	 */
 	public void move() {
 		float delta = Gdx.graphics.getDeltaTime();
-		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			if (colisionIzquierda()) {
-				bordes.x -= speed * delta;
+		if (server == null) {
+			if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+				if (colisionIzquierda()) {
+					bordes.x -= speed * delta;
+				}
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				if (colisionDerecha()) {
+					bordes.x += speed * delta;
+				}
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			if (colisionDerecha()) {
-				bordes.x += speed * delta;
+		} else {
+			if(server.getRecibido() == null||server.getRecibido().equals(" ")) {
+				return;
+			}
+			else if (Gdx.input.isKeyPressed(Keys.LEFT) || server.getRecibido().equals("1")) {
+				if (colisionIzquierda()) {
+					bordes.x -= speed * delta;
+				}
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)|| server.getRecibido().equals("2")) {
+				if (colisionDerecha()) {
+					bordes.x += speed * delta;
+				}
 			}
 		}
 	}

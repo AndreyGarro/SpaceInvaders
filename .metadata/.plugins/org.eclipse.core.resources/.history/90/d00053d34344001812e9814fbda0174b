@@ -1,0 +1,36 @@
+import java.net.*;
+import java.io.*;
+
+public class ServerPrueba {
+    private ServerSocket server;
+    private Socket socket;
+    private int puerto = 9000;
+    private ObjectOutputStream salida;
+    private ObjectInputStream entrada;
+
+    public static void main(String[] args){
+        ServerPrueba server = new ServerPrueba();
+        server.run();
+    }
+    public void run() {
+
+        while (true) {
+            try {
+                server = new ServerSocket(puerto);
+                socket = new Socket();
+                System.out.println("Esperando...");
+                socket = server.accept();
+                System.out.println("Conectado");
+                entrada = new ObjectInputStream(socket.getInputStream());
+                String mensaje = (String) entrada.readObject();
+                System.out.println(mensaje);
+                server.close();
+                socket.close();
+            } catch (Exception e) {
+
+            }
+        }
+    }
+}
+
+}

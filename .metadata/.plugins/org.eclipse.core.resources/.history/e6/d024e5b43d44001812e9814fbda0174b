@@ -1,0 +1,35 @@
+import java.net.*;
+import java.io.*;
+
+public class ClientePrueba {
+
+    private Socket cliente;
+    private int puerto = 9000;
+    private String ip = "127.0.0.1";
+    private BufferedReader entrada, teclado;
+    private PrintStream salida;
+
+    public void inicio(){
+        try {
+            cliente = new Socket(ip, puerto);
+            entrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+            teclado = new BufferedReader(new InputStreamReader(System.in));
+            String tec = teclado.readLine();
+            salida = new PrintStream(cliente.getOutputStream());
+            salida.println(tec);
+            String msg  = entrada.readLine();
+            System.out.println(msg);
+
+            entrada.close();
+            salida.close();
+            teclado.close();
+            cliente.close();
+            
+        } catch (Exception e){
+
+        }
+
+
+    }
+
+}

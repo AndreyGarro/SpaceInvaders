@@ -1,6 +1,7 @@
 package com.andrews.escenario;
 
 import java.util.ArrayList;
+import com.andrews.*;
 
 import com.andrews.spaceinvaders.GameMain;
 import com.badlogic.gdx.Gdx;
@@ -38,6 +39,18 @@ public class Nivel extends AbstractScreen {
 		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
 		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
 		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
 
 	}
 
@@ -45,7 +58,7 @@ public class Nivel extends AbstractScreen {
 	public void render(float delta) {
 		ArrayList<String> hileras = new ArrayList<String>();
 
-		main.fondo = listaHileras.get(6);
+		main.fondo = listaHileras.get(0);
 		main.setScreen(main.fondo);
 
 	}

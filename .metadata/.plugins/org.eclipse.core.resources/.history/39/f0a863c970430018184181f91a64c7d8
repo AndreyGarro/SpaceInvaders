@@ -1,0 +1,93 @@
+package com.andrews.escenario;
+
+import com.andrews.spaceinvaders.GameMain;
+import com.badlogic.gdx.Screen;
+import com.andrews.estructuras.*;
+/**
+ * Permite crear las pantallas y la ejecucion de todos los elementos graficos
+ * del juego.
+ * 
+ * @author andrey
+ *
+ */
+public abstract class AbstractScreen implements Screen {
+
+	protected GameMain main;
+	protected String tipo;
+	protected Nivel nivel;
+	protected Lista listaEnemigos;
+
+	// Constructor
+	public AbstractScreen(GameMain main) {
+		this.main = main;
+	}
+
+	@Override
+	public void render(float delta) {
+
+	}
+
+	@Override
+	public void show() {
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
+	}
+
+	@Override
+	public void dispose() {
+
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+	
+
+	/**
+	 * Realiza el movimiento de los lados y hacia abajo de los enemigos.
+	 */
+	private void movimientoEnemigos() {
+		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
+			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
+			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
+				}
+				revisaColision = 2;
+			}
+			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
+				listaEnemigos.getDato(i).getBordes().x += 0.7f;
+			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
+				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
+				}
+				revisaColision = 1;
+			}
+			if (listaEnemigos.getDato(i).getBordes().y <= 70) {
+				main.fondo = new MainMenu(main);
+				main.setScreen(main.fondo);
+			}
+		}
+	}
+
+}

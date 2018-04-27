@@ -1,0 +1,63 @@
+package com.andrews.estructuras;
+
+import com.andrews.escenario.MainMenu;
+
+/**
+ * Clase para hacer de todas las listas enlazadas un solo tipo.
+ * @author andrey
+ *
+ */
+public abstract class Lista<T> {
+
+	private Lista listaEnemigos;
+	
+	/**
+	 * Realiza el movimiento de los lados y hacia abajo de los enemigos.
+	 */
+	private void movimientoEnemigos() {
+		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
+			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
+			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
+				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
+				}
+				revisaColision = 2;
+			}
+			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
+				listaEnemigos.getDato(i).getBordes().x += 0.7f;
+			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
+				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
+					listaEnemigos.getDato(x).getBordes().y -= 40;
+				}
+				revisaColision = 1;
+			}
+			if (listaEnemigos.getDato(i).getBordes().y <= 70) {
+				main.fondo = new MainMenu(main);
+				main.setScreen(main.fondo);
+			}
+		}
+	}
+	
+	/**
+	 * Agrega un nodo al final de la lista
+	 * 
+	 * @param valor
+	 *            el dato que se desea colocar al final
+	 */
+	public void agregarAlFinal(T valor) {
+		NodoSimple<T> nuevo = new NodoSimple<T>();
+		nuevo.setDato(valor);
+
+		if (this.isEmpty()) {
+			this.primero = nuevo;
+		} else {
+			NodoSimple<T> aux = primero;
+			while (aux.getSiguiente() != null) {
+				aux = aux.getSiguiente();
+			}
+			aux.setSiguiente(nuevo);
+		}
+		tamaño += 1;
+	}
+}

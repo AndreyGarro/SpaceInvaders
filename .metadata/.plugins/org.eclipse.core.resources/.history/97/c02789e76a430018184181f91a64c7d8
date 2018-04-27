@@ -1,0 +1,53 @@
+package com.andrews.estructuras;
+
+/**
+ * Clase para hacer de todas las listas enlazadas un solo tipo.
+ * @author andrey
+ *
+ */
+public abstract class Lista<T> {
+	
+	private NodoSimple<T> primero;
+	protected int tamaño;
+	
+	/**
+	 * Agrega un nodo al final de la lista
+	 * 
+	 * @param valor
+	 *            el dato que se desea colocar al final
+	 */
+	public void agregarAlFinal(T valor) {
+		NodoSimple<T> nuevo = new NodoSimple<T>();
+		nuevo.setDato(valor);
+
+		if (this.isEmpty()) {
+			this.setPrimero(nuevo);
+		} else {
+			NodoSimple<T> aux = getPrimero();
+			while (aux.getSiguiente() != null) {
+				aux = aux.getSiguiente();
+			}
+			aux.setSiguiente(nuevo);
+		}
+		tamaño += 1;
+	}
+	
+	/**
+	 * Revisa si la lista está vacía
+	 * 
+	 * @return true o false
+	 */
+	public boolean isEmpty() {
+		return getPrimero() == null;
+	}
+
+	public NodoSimple<T> getPrimero() {
+		return primero;
+	}
+
+	public void setPrimero(NodoSimple<T> primero) {
+		this.primero = primero;
+	}
+
+
+}

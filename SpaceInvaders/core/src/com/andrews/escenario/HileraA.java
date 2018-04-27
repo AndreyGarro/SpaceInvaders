@@ -104,8 +104,8 @@ public class HileraA extends AbstractScreen {
 			for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 				listaEnemigos.getDato(i).draw(batch);
 				try {
-					revisaVacia();
 					revisaImpacto(i);
+					revisaVacia();
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
@@ -121,18 +121,18 @@ public class HileraA extends AbstractScreen {
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				listaEnemigos.getDato(i).getBordes().x -= 0.7f;
+				listaEnemigos.getDato(i).getBordes().x -= 0.9f;
 			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
-					listaEnemigos.getDato(x).getBordes().y -= 40;
+					listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 2;
 			}
 			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
-				listaEnemigos.getDato(i).getBordes().x += 0.7f;
+				listaEnemigos.getDato(i).getBordes().x += 0.9f;
 			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
 				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
-					listaEnemigos.getDato(x).getBordes().y -= 40;
+					listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 1;
 			}
@@ -175,9 +175,8 @@ public class HileraA extends AbstractScreen {
 					nivel.puntaje += 50;
 					listaEnemigos.eliminarTodo();
 					revisaVacia();
-					return;
 				}
-				if (listaEnemigos.getDato(pos).getResistencia() == 1) {
+				else if (listaEnemigos.getDato(pos).getResistencia() == 1) {
 					enemyDeadSound.play();
 					nivel.puntaje += 10;
 					listaEnemigos.eliminarPos(pos, listaEnemigos);

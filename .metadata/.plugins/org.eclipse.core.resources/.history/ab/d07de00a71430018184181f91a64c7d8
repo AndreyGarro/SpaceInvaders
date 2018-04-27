@@ -1,0 +1,20 @@
+package com.andrews.estructuras;
+
+/**
+ * Clase para hacer de todas las listas enlazadas un solo tipo.
+ * @author andrey
+ *
+ */
+public abstract class Lista {
+	
+	protected int tamaño;
+	
+	/**
+	 * Devuelve el tamaño de la lista
+	 * 
+	 * @return tamaño
+	 */
+	public int getTamaño() {
+		return tamaño;
+	}
+}

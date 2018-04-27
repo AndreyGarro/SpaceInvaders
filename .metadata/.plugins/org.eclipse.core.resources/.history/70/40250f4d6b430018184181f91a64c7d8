@@ -1,0 +1,131 @@
+package com.andrews.estructuras;
+
+import com.andrews.sprites.Enemigo;
+
+/**
+ * Clase para hacer de todas las listas enlazadas un solo tipo.
+ * @author andrey
+ *
+ */
+public abstract class Lista<T> {
+	
+	private NodoSimple<T> primero;
+	protected int tamaño;
+	
+	public int getTamaño() {
+		return tamaño;
+	}
+
+	public void setTamaño(int tamaño) {
+		this.tamaño = tamaño;
+	}
+
+	/**
+	 * Agrega un nodo al final de la lista
+	 * 
+	 * @param valor
+	 *            el dato que se desea colocar al final
+	 */
+	public void agregarAlFinal(T valor) {
+		NodoSimple<T> nuevo = new NodoSimple<T>();
+		nuevo.setDato(valor);
+
+		if (this.isEmpty()) {
+			this.setPrimero(nuevo);
+		} else {
+			NodoSimple<T> aux = getPrimero();
+			while (aux.getSiguiente() != null) {
+				aux = aux.getSiguiente();
+			}
+			aux.setSiguiente(nuevo);
+		}
+		tamaño += 1;
+	}
+	
+	/**
+	 * Revisa si la lista está vacía
+	 * 
+	 * @return true o false
+	 */
+	public boolean isEmpty() {
+		return getPrimero() == null;
+	}
+
+	public NodoSimple<T> getPrimero() {
+		return primero;
+	}
+
+	public void setPrimero(NodoSimple<T> primero) {
+		this.primero = primero;
+	}
+	
+	/**
+	 * Devuelve el dato en la posicion dada
+	 * 
+	 * @param pos
+	 *            posicion en donde se encuentra el dato
+	 * @return el dato en la posicion solicitada
+	 */
+	public T getDato(int pos) {
+		NodoSimple<T> aux = this.getPrimero();
+		int cont = 0;
+		while (cont != pos) {
+			aux = aux.getSiguiente();
+			cont++;
+		}
+		return aux.getDato();
+	}
+	
+	/**
+	 * Reacomoda las posiciones de los enemigos en la hilera.
+	 * 
+	 * @param nodo
+	 *            nodo eliminado.
+	 */
+	public void mover(NodoSimple<T> nodo, ListaSimple<Enemigo> lista) {
+		NodoSimple<T> aux = this.getPrimero();
+		int cont = 0;
+		while (aux != nodo) {
+			lista.getDato(cont).getBordes().x += 37;
+			aux = aux.getSiguiente();
+			cont++;
+		}
+		while (cont < lista.tamaño) {
+			lista.getDato(cont).getBordes().x -= 37;
+			cont++;
+		}
+	}
+	
+	/**
+	 * Elimina todos los datos de la lista.
+	 */
+	public void eliminarTodo() {
+		this.setPrimero(null);
+		tamaño = 0;
+	}
+
+
+	/**
+	 * Elmina el nodo de la posicion dada.
+	 * 
+	 * @param pos
+	 *            posicion que se desea eliminar.
+	 */
+	public void eliminarPos(int pos, ListaSimple<Enemigo> lista) {
+		if (pos >= 0 && pos < this.tamaño) {
+			if (pos == 0) {
+				this.setPrimero(getPrimero().getSiguiente());
+			} else {
+				NodoSimple<T> aux = getPrimero();
+				for (int i = 0; i < pos - 1; i++) {
+					aux = aux.getSiguiente();
+				}
+				NodoSimple<T> siguiente = aux.getSiguiente();
+				this.mover(siguiente, lista);
+				aux.setSiguiente(siguiente.getSiguiente());
+			}
+			this.tamaño--;
+		}
+	}
+
+}

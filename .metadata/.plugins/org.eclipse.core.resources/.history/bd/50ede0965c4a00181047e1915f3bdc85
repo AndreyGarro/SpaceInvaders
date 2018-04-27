@@ -1,0 +1,66 @@
+package com.andrews.escenario;
+
+import java.util.ArrayList;
+import com.andrews.*;
+
+import com.andrews.spaceinvaders.GameMain;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;;
+
+/**
+ * Crea el ArrayList con las hileras para crear las pantallas de juego.
+ * 
+ * @author andrey
+ *
+ */
+@SuppressWarnings("unused")
+public class Nivel extends AbstractScreen {
+
+	// Atributos de la Clase
+	private ArrayList<AbstractScreen> listaHileras;
+	public int nivel = 1;
+	public int valorEliminar = 0;
+	public int puntaje = 0;
+
+	// Constructor
+	public Nivel(GameMain main) {
+		super(main);
+		this.listaHileras = new ArrayList<AbstractScreen>();
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraC(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraA(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraB(this.main, this.listaHileras, this));
+		listaHileras.add(new HileraBasica(this.main, this.listaHileras, this));
+
+	}
+
+	@Override
+	public void render(float delta) {
+		ArrayList<String> hileras = new ArrayList<String>();
+
+		main.fondo = listaHileras.get(0);
+		main.setScreen(main.fondo);
+
+	}
+
+}

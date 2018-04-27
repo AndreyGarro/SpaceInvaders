@@ -103,8 +103,8 @@ public class HileraC extends AbstractScreen {
 			for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 				listaEnemigos.getDato(i).draw(batch);
 				try {
-					revisaVacia();
 					revisaImpacto(i);
+					revisaVacia();
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
@@ -120,18 +120,18 @@ public class HileraC extends AbstractScreen {
 	private void movimientoEnemigos() {
 		for (int i = 0; i < listaEnemigos.getTamaño(); i++) {
 			if (!listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				listaEnemigos.getDato(i).getBordes().x -= 0.5f;
+				listaEnemigos.getDato(i).getBordes().x -= 0.9f;
 			} else if (listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				for (int x = listaEnemigos.getTamaño() - 1; x >= 0; x--) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;
+					listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 2;
 			}
 			if (!listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
-				listaEnemigos.getDato(i).getBordes().x += 0.7f;
+				listaEnemigos.getDato(i).getBordes().x += 0.9f;
 			} else if (listaEnemigos.getDato(listaEnemigos.getTamaño() - 1).colisionDerecha() && revisaColision == 2) {
 				for (int x = 0; x < listaEnemigos.getTamaño(); x++) {
-					listaEnemigos.getDato(x).getBordes().y -= 20;
+					listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 1;
 			}
@@ -150,7 +150,7 @@ public class HileraC extends AbstractScreen {
 		if (this.listaEnemigos.isEmpty()) {
 			if (this.listaHileras.isEmpty()) {
 				System.out.println("lista vacia");
-			}
+			} 
 			this.dispose();
 			main.setScreen(listaHileras.get(nivel.valorEliminar));
 		}
@@ -171,26 +171,25 @@ public class HileraC extends AbstractScreen {
 				if (listaEnemigos.getDato(i).getTipoEnemigo().equals("boss") && !listaEnemigos.isEmpty()) {
 					if (listaEnemigos.getTamaño() == 1) {
 						nivel.puntaje += 50;
-						listaEnemigos.eliminarPos(i);
+						listaEnemigos.eliminarTodo();
 						revisaVacia();
 					}
-					nivel.puntaje += 50;
-					int random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
-					while (random == i) {
-						random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
-					}
-					int resisRandom = (int) (Math.random() * 4 + 2);
-					Enemigo newBoss = new Enemigo(listaEnemigos.getDato(random).getBordes().x,
-							listaEnemigos.getDato(random).getBordes().y, resisRandom, "boss2.png", "boss");
-					NodoCircular<Enemigo> boss = new NodoCircular<Enemigo>();
-					boss.setDato(newBoss);
-					listaEnemigos.reemplazar(random, boss);
+					else {
+						nivel.puntaje += 50;
+						listaEnemigos.eliminarPos(i);
+						int random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
+						while (random == i) {
+							random = (int) (Math.random() * listaEnemigos.getTamaño() - 1);
+						}
+						int resisRandom = (int) (Math.random() * 4 + 2);
+						Enemigo newBoss = new Enemigo(listaEnemigos.getDato(random).getBordes().x,
+								listaEnemigos.getDato(random).getBordes().y, resisRandom, "boss2.png", "boss");
+						NodoCircular<Enemigo> boss = new NodoCircular<Enemigo>();
+						boss.setDato(newBoss);
+						listaEnemigos.reemplazar(random, boss);
+						}
 				}
-				else {
-					System.out.println("hola");
-					
-				}
-				if (listaEnemigos.getDato(i).getResistencia() == 1) {
+				else if (listaEnemigos.getDato(i).getResistencia() == 1) {
 					enemyDeadSound.play();
 					nivel.puntaje += 10;
 					listaEnemigos.eliminarPos(i);

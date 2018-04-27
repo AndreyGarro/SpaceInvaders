@@ -127,20 +127,20 @@ public class HileraB extends AbstractScreen {
 	private void movimientoEnemigos() {
 		for (int i = 0; i < this.listaEnemigos.getTamaño(); i++) {
 			if (!this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
-				this.listaEnemigos.getDato(i).getBordes().x -= 0.7f;
+				this.listaEnemigos.getDato(i).getBordes().x -= 0.9f;
 			} else if (this.listaEnemigos.getDato(0).colisionIzquierda() && revisaColision == 1) {
 				for (int x = this.listaEnemigos.getTamaño() - 1; x >= 0; x--) {
-					this.listaEnemigos.getDato(x).getBordes().y -= 40;
+					this.listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 2;
 			}
 			if (!this.listaEnemigos.getDato(this.listaEnemigos.getTamaño() - 1).colisionDerecha()
 					&& revisaColision == 2) {
-				this.listaEnemigos.getDato(i).getBordes().x += 0.7f;
+				this.listaEnemigos.getDato(i).getBordes().x += 0.9f;
 			} else if (this.listaEnemigos.getDato(this.listaEnemigos.getTamaño() - 1).colisionDerecha()
 					&& revisaColision == 2) {
 				for (int x = 0; x < this.listaEnemigos.getTamaño(); x++) {
-					this.listaEnemigos.getDato(x).getBordes().y -= 40;
+					this.listaEnemigos.getDato(x).getBordes().y -= 50;
 				}
 				revisaColision = 1;
 			}

@@ -1,0 +1,33 @@
+import java.net.*;
+import java.io.*;
+
+public class ServerPrueba {
+
+    private Socket cliente;
+    private int puerto = 9000;
+    private String ip = "172.18.216.43";
+    //private ObjectInputStream entrada;
+    private ObjectOutputStream salida;
+
+    public static void main(String[] args) {
+        ServerPrueba client = new ServerPrueba();
+
+        client.inicio();
+    }
+
+    public void inicio() {
+        try {
+            cliente = new Socket(ip, puerto);
+            boolean conec = cliente.isConnected();
+            System.out.println(conec);
+            salida = new ObjectOutputStream(cliente.getOutputStream());
+            salida.writeObject("hola");
+            salida.close();
+            cliente.close();
+
+        } catch (Exception e) {
+        }
+
+    }
+
+}
